@@ -1,0 +1,11 @@
+.book {
+    width: 100%; 
+    position: relative;
+}
+
+.world {
+    width: 68%;
+    position: absolute;
+    bottom: 37%;
+    left: 15%;
+}
