@@ -1,11 +1,15 @@
-.book {
-    width: 100%; 
+.open-book {
+    border: 5px solid red;
+    width: 100%;
     position: relative;
 }
 
 .world {
-    width: 68%;
+    border: 5px solid green;
+    width: 50%;
     position: absolute;
-    bottom: 37%;
-    left: 15%;
+    left: 30%;
+    bottom: 30%;
+
 }
+
