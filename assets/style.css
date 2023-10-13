@@ -8,10 +8,10 @@
 }
 
 #book-cover {
-    width: 42%;
+    width: 42.5%;
     position: absolute;
-    left: 28%;
-    bottom: 20%;
+    left: 27.5%;
+    bottom: 17.5%;
 }
 
 /* made the background images container and the image itself relative, and that seemed to make it so that the second image was confined within the first */
