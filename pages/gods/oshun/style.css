@@ -1,0 +1,21 @@
+.background {
+    position: relative;
+}
+
+#open-book {
+    width: 100%;
+    position: relative;
+}
+
+.oshun-text {
+    width: 45%;
+    position: absolute;
+    left: 53%;
+    bottom: 30%;
+    /* border: 5px solid red; */
+}
+
+p{
+    font-size: 25px;
+    line-height: 1.5;
+}

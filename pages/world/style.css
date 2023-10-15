@@ -1,4 +1,4 @@
-/* I was running into trouble getting these images to overlap eeven thoug I was using the same method as on the home page, so I copied and pasted that code and changed the names/values of the divs and images to the correct ones*/
+/* I was running into trouble getting these images to overlap even though I was using the same method as on the home page, so I copied and pasted that code and changed the names/values of the divs and images to the correct ones*/
 .background {
     position: relative;
 }
@@ -14,3 +14,4 @@
     left: 4%;
     bottom: 30%;
 }
+
