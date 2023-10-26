@@ -1,10 +1,9 @@
-.background {
-    position: relative;
+/* .background {
+    display: flex;
 }
 
 #open-book {
     width: 100%;
-    position: relative;
 }
 
 .oshun-text {
@@ -12,7 +11,6 @@
     position: absolute;
     left: 53%;
     bottom: 30%;
-    /* border: 5px solid red; */
 }
 
 .oshun-img {
@@ -24,12 +22,33 @@
 
 #oshun{
     width: 55%
-    /* opacity: .6 */
-    /* position: absolute; */
 
 }
 
 p{
     font-size: 25px;
     line-height: 1.5;
+} */
+
+
+.background {
+    position: relative;
+}
+
+#open-book {
+    width: 100%;
+    position: relative;
+}
+
+#oshun-img {
+    width: 42.5%;
+    position: absolute;
+    left: 5%;
+    bottom: 34%;
+}
+
+#oshun-txt {
+    position: absolute;
+    left: 70%;
+    bottom: 70%;  
 }
