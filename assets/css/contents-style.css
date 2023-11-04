@@ -1,0 +1,34 @@
+/* I was running into trouble getting these images to overlap even though I was using the same method as on the home page, so I copied and pasted that code and changed the names/values of the divs and images to the correct ones*/
+body {
+    background-color: rgb(50, 37, 7);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    margin: 3% auto;
+}
+
+.background {
+    position: relative;
+}
+
+#home-btn, #contents-btn, #random-btn {
+    background-color: rgb(87, 8, 8);
+    padding: 1% 5%;
+    font-size: 40px;
+    font-family: 'Italianno', cursive;
+}
+
+#open-book {
+    width: 100%;
+    position: relative;
+}
+
+#world {
+    width: 94%;
+    position: absolute;
+    left: 4%;
+    bottom: 30%;
+}
+
