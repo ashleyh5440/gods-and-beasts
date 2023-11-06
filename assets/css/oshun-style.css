@@ -2,10 +2,6 @@ body {
     background-color: rgb(50, 37, 7);
 }
 
-p {
-    
-}
-
 .background {
     position: relative;
 }
@@ -48,6 +44,14 @@ p {
     font-size: max(2rem, 8cqi);
     /* rem: dictates element's font size relative to size of root element; max to limit how small text can get 
     8 cqi font size*/
+}
+
+#page1, #page2, #page3 {
+    container-type: inline-size; 
+}
+
+.hidden {
+    display: none;
 }
 
 #open-book {
