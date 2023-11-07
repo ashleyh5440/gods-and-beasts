@@ -69,7 +69,7 @@ body {
 #oshun-img {
     width: 100%;
     height: 80%
-    margin-bottom: 3%;
+    margin-bottom:3%;
 } 
 
 #nextPageBtn {
@@ -83,7 +83,22 @@ body {
 
 }
 
+#previousPageBtn {
+    font-family: 'Italianno', cursive;
+    font-size: 40px;
+    background-color: transparent;
+    border: none;
+    padding: 3%;
+    border-radius: 50%;
+
+}
+
 #nextPageBtn:hover {
+    background-color: rgb(255, 206, 44);
+    opacity: .2;
+}
+
+#previousPageBtn:hover {
     background-color: rgb(255, 206, 44);
     opacity: .2;
 }
