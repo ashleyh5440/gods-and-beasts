@@ -1,6 +1,12 @@
 /* I was running into trouble getting these images to overlap even though I was using the same method as on the home page, so I copied and pasted that code and changed the names/values of the divs and images to the correct ones*/
 body {
-    background-color: rgb(50, 37, 7);
+    background-color: rgb(50, 25, 7);
+}
+
+h1 {
+    font-size: 70px;
+    text-align: center;
+    font-family: 'Italianno', cursive;
 }
 
 .nav {
@@ -18,6 +24,7 @@ body {
     padding: 1% 5%;
     font-size: 40px;
     font-family: 'Italianno', cursive;
+    border: none;
 }
 
 #open-book {
@@ -25,10 +32,52 @@ body {
     position: relative;
 }
 
-#world {
+.content {
+    position: absolute;
+    width: 90%;
+    height: 70%;
+    bottom: 24%;
+    left: 5%;
+}
+
+.whole {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    border: 5px solid red;
+}
+
+.left {
+    margin-right: 3%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 5px solid green;
+}
+
+.right {
+    margin-left: 3%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 5px solid black;
+}
+ #africa, #asia, #australia, #caribbean, #europe, #middle-east, #north-america, #pacific-islands, #south-america {
+    font-size: 40px;
+    font-family: 'Italianno', cursive;
+    background-color: transparent;
+    border: none;
+ }
+
+ #world {
     width: 94%;
     position: absolute;
     left: 4%;
     bottom: 30%;
+    opacity: 0.2;
 }
 

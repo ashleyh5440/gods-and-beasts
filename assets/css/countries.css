@@ -1,0 +1,41 @@
+button {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+}
+
+.left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3.5%;
+}
+
+.right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3.5%;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 98%;
+}
+
+.next-previous-btns {
+    position: absolute;
+    width: 85%;
+    bottom: 1%;
+    left: 7%;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
