@@ -38,4 +38,19 @@ button {
     justify-content: space-between;
 }
 
+.col button {
+    border-radius: 40%;
+}
 
+.col button:hover {
+    box-shadow: 0 15px 15px rgba(202, 101, 6, 0.4);
+    color: rgba(255, 66, 3, 0.4);
+}
+
+#next-page-btn:hover {
+    box-shadow: 0 15px 15px rgba(202, 101, 6, 0.4);
+}
+
+#prev-page-btn:hover {
+    box-shadow: 0 15px 15px rgba(202, 101, 6, 0.4);
+}
