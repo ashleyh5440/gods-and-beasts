@@ -1,4 +1,4 @@
-.background {
+/* .background {
     position: relative;
 }
 
@@ -12,6 +12,50 @@
     position: absolute;
     left: 27.5%;
     bottom: 17.5%;
-}
+} */
 
 /* made the background images container and the image itself relative, and that seemed to make it so that the second image was confined within the first */
+body{
+    background-color: black;
+}
+
+h1 {
+    text-align: center;
+    font-size: 600%;
+    font-family: 'Italianno', cursive;
+    color: white;
+}
+
+button {
+    background-color: rgb(87, 8, 8);
+    padding: 1% 5%;
+    font-size: 50px;
+    font-family: 'Italianno', cursive;
+    border: none;
+}
+
+.header {
+    margin: 5%;
+}
+
+.img-container {
+    position: relative;
+    margin-left: 2.5%;
+    width: 95%;
+}
+
+.btns-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 2%
+}
+
+#logo {
+    width: 100%;
+    animation: fadeIn 7s;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
