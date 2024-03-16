@@ -1,0 +1,14 @@
+.page {
+    display: none; /* Initially hide all pages */
+  }
+
+.page.visible {
+    display: block;
+    background-image: url(../../assets/page.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#book-cover {
+    width: 100%;
+}
