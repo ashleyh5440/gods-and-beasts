@@ -1,3 +1,4 @@
+
 .page {
     display: none; /* Initially hide all pages */
   }
@@ -7,6 +8,14 @@
     background-image: url(../../assets/page.png);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.page-content {
+    color: black;
+    font-family: 'Italianno', cursive;
+    font-size: 35px;
+    text-align: left;
+    margin: 8% 3%;
 }
 
 #book-cover {
