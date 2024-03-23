@@ -26,11 +26,11 @@ const characterSchema = new Schema({
         type: String,
         required: true,
     },
-    deck_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'UserDeck',
-        default: null,
-    },
+    // deck_id: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'UserDeck',
+    //     default: null,
+    // },
 });
 
 const Character = model('Character', characterSchema);
