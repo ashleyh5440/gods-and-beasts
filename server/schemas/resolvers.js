@@ -1,7 +1,7 @@
 const { Character, User, UserDeck } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
-const resolver = {
+const resolvers = {
     Query: {
         getCharacters: async () => { //gets all characters from database
             try {
@@ -33,7 +33,7 @@ const resolver = {
             try {
                 const user = await User.create({ username, email, password });
                 const token = signToken(user);
-                return { token, user },
+                return { token, user }
             } catch (error) {
                 throw new Error('Failed to add user');
             }
