@@ -1,7 +1,11 @@
 import React from 'react';
-import '../Card/style.css';
+import { useQuery } from '@apollo/client';
+
 import { QUERY_CHARACTERS } from "../../utils/queries";
 import { ADD_CARD, REMOVE_CARD} from "../../utils/mutations";
+
+import '../Card/style.css';
+
 
 // retrieve data from the database and format it as the card
 

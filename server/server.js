@@ -15,7 +15,7 @@ const server = new ApolloServer({
   resolvers,
 });
 
-const startApolloServer = async () => { //starts the appolo server
+const startApolloServer = async () => { //starts the apollo server
     await server.start();
     
     app.use(express.urlencoded({ extended: false }));   //middleware to parse urlencoded request bodies

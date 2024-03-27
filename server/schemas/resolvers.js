@@ -11,17 +11,17 @@ const resolvers = {
                 throw new Error('Failed to fetch characters');
             }
         },
-        getUserDecks: async (_, { user_id }) => { //gets decks based on user id
+        getUserDecks: async (_, { userId }) => { //gets decks based on user id
             try {
-                const userDecks = await UserDeck.find({ user_id });
+                const userDecks = await UserDeck.find({ userId });
                 return userDecks;
             } catch (error) {
                 throw new Error('Failed it fetch user decks');
             }
         },
-        getWinsAndLosses: async (_, { user_id }) => { //gets wins and losses based on user id
+        getWinsAndLosses: async (_, { userId }) => { //gets wins and losses based on user id
             try {
-                const user = await User.findById(user_id);
+                const user = await User.findById(userId);
                 return user;
             } catch (error) {
                 throw new Error('Failed to fetch');
@@ -45,7 +45,7 @@ const resolvers = {
                 if (!user) {
                     throw new AuthenticationError('User not found');
                 }
-                const correctPassword = await user.isCorrectPAssword(password);
+                const correctPassword = await user.isCorrectPassword(password);
                 if(!correctPassword) {
                     throw new AuthenticationError('Incorrect password');
                 }
@@ -65,9 +65,9 @@ const resolvers = {
                 throw new Error('Failed to add card to deck');
             }
         },
-        addDeck: async (_, { user_id, deck_name }) => { //adds deck to user account
+        addDeck: async (_, { userId, deck_name }) => { //adds deck to user account
             try {
-                const userDeck = await UserDeck.create({ user_id, deck_name });
+                const userDeck = await UserDeck.create({ userId, deck_name });
                 return userDeck;
             } catch (error) {
                 throw new Error('Failed to add deck');
@@ -101,10 +101,10 @@ const resolvers = {
         },
         removeDeck: async (_, { userDeckId }) => {
             try {
-                await UserDeck.findByIdAndDelete(userDeckID);
+                await UserDeck.findByIdAndDelete(userDeckId);
                 return { message: 'Deck deleted' };
             } catch (error) {
-                throw new Error('Faled to remove deck');
+                throw new Error('Failed to remove deck');
             }
         }
     }

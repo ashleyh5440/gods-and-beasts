@@ -27,7 +27,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_CARD = gql`
-    mutation addCard(characterId: ID!, userDeckId: ID!) {
+    mutation addCard($characterId: ID!, $userDeckId: ID!) {
         addCard(characterId: $characterId, userDeckId: $userDeckId) {
             _id
             deck_name
@@ -90,7 +90,7 @@ mutation addLoss($userId: ID!) {
 `;
 
 export const REMOVE_CARD = gql`
-mutation removeCard(characterId: ID!, userDeckId: ID!) {
+mutation removeCard($characterId: ID!, $userDeckId: ID!) {
     removeCard(characterId: $characterId, userDeckId: $userDeckId) {
         _id
         deck_name
@@ -125,6 +125,3 @@ mutation removeDeck($userId: ID!, $deckName: String!) {
     }
 }
 `;
-
-
-

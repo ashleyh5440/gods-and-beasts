@@ -30,8 +30,8 @@ export const QUERY_USERDECK = gql`
 `;
 
 export const QUERY_CHARACTERS = gql`
-    query getCharacter($characterId: ID!) {
-        getCharacter(characterId: $characterId) {
+    query getCharacters {
+        getCharacters {
             _id
             name
             description

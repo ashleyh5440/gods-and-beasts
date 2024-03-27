@@ -16,11 +16,11 @@ const typeDefs = `
         highScore: Int
         wins: Int
         losses: Int
-    }
+    } 
 
     type UserDeck {
         _id: ID!
-        user_id: ID!
+        userId: ID!
         deck_name: String!
         characters: [Character]!
     }
@@ -32,18 +32,18 @@ const typeDefs = `
 
     type Query {
         getCharacters: [Character]
-        getUserDecks(user_id: ID!): [UserDeck]
-        getWinsAndLosses(user_id: ID!): User
+        getUserDecks(userId: ID!): [UserDeck]
+        getWinsAndLosses(userId: ID!): User
     }
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
         addCard(characterId: ID!, userDeckId: ID!): UserDeck
-        addDeck(user_id: ID!, deck_name: String!): UserDeck
-        addWin(user_id: ID!): User
-        addLoss(user_id: ID!): User
+        addDeck(userId: ID!, deck_name: String!): UserDeck
+        addWin(userId: ID!): User
+        addLoss(userId: ID!): User
         removeCard(characterId: ID!, userDeckId: ID!): UserDeck
-        removeDeck(user_id: ID): User
+        removeDeck(userId: ID): User
     }
 `;
 
