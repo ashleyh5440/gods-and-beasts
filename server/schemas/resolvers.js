@@ -55,7 +55,7 @@ const resolvers = {
                 throw new AuthenticationError('Login failed');
             }
         },
-        addCard: async (_, { characterID, userDeckId }) => { //adds card to deck
+        addCard: async (_, { characterId, userDeckId }) => { //adds card to deck
             try {
                 const userDeck = await UserDeck.findById(userDeckId);
                 userDeck.characters.push(characterId);
@@ -73,17 +73,17 @@ const resolvers = {
                 throw new Error('Failed to add deck');
             }
         }, 
-        addWin: async (_, { user_id }) => {
+        addWin: async (_, { userId }) => {
             try {
-                const user = await User.findByIdAndUpdate(user_id, { $inc: { losses: 1 } }, { new: true });
+                const user = await User.findByIdAndUpdate(userId, { $inc: { losses: 1 } }, { new: true });
                 return user;
             } catch (error) {
                 throw new Error('Failed to add win');
             }
         },
-        addLoss: async (_, { user_id }) => {
+        addLoss: async (_, { userId }) => {
             try {
-                const user = await User.findByIdAndUpdate(user_id, { $inc: { losses: 1 } }, { new: true});
+                const user = await User.findByIdAndUpdate(userId, { $inc: { losses: 1 } }, { new: true});
                 return user;
             } catch (error) {
                 throw new Error('Failed to add');

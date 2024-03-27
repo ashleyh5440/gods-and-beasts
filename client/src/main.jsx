@@ -8,6 +8,7 @@ import './index.css'
 import Home from './pages/Home';
 import Game from './pages/Game';
 import Lore from './pages/Lore';
+import CreateDeck from './pages/CreateDeck/';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/game',
         element: <Game />,
+      },
+      {
+        path: '/createdeck',
+        element: <CreateDeck />,
       },
       // {
       //   path: '/store',
