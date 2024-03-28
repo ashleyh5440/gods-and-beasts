@@ -13,7 +13,7 @@
         "description": "The incarnation of change and mischief, the eternal trickster Coyote can be funny or fearsome. Vain and greedy, he can harm just as easily as help those who call upon him.",
         "attack_points": 500,
         "defense_points": 850,
-        "image": "coyote.jpg"
+        "image": "coyote.png"
       },
       {
         "name": "Pachamama",
@@ -21,7 +21,7 @@
         "description": "Goddess of the earth and fertility, Pachamama can sustain life or take it. Though she is normally peaceful, she can also create earthquakes to crumble mountains and bury cities.",
         "attack_points": 300,
         "defense_points": 750,
-        "image": "pachamama.jpg"
+        "image": "pachamama.png"
       },
       {
         "name": "Xolotl",
@@ -37,7 +37,7 @@
         "description": "Creator of chaos and disorder, Guabancex is a mercurial goddess known for conjuring hurricanes and floods. Efforts to calm her violent temper often fail, and even other gods fear her.",
         "attack_points": 800,
         "defense_points": 700,
-        "image": "guabancex.jpg" 
+        "image": "guabancex.png" 
       },
       {
         "name": "Papa Legba",
@@ -45,7 +45,7 @@
         "description": "An intermediary between man and spirits, the loa Papa Legba stands at the crossroads of life and death. He grants or denies permission to speak to the other loa and is often seen as a protector.",
         "attack_points": 300,
         "defense_points": 600,
-        "image": "papalegba.jpg"
+        "image": "papalegba.png"
       },
       {
         "name": "Ravuravu",
@@ -53,7 +53,7 @@
         "description": "God of murder Ravuravu earned his name. He sits on large stones and waits for his victims to cross his path. Touching one of these stones will make your skin turn white — if Ravuravu doesn't catch you first.",
         "attack_points": 750,
         "defense_points": 500,
-        "image": "ravuravu.jpg"
+        "image": "ravuravu.png"
       },
       {
         "name": "Pele",
@@ -61,7 +61,7 @@
         "description": "Goddess Pele is just as unpredictable and explosive as the volcanoes she embodies. Holding the power to both create and destroy, Pele is known to do both with equal passion.",
         "attack_points": 800,
         "defense_points": 650,
-        "image": "pele.jpg"
+        "image": "pele.png"
       },
       {
         "name": "Èsù",
@@ -77,7 +77,7 @@
         "description": "Cat-headed Bastet is the goddess of protection, childbirth, and fertility. Though usually benevolent, she is also known as The Lady of Dread for her ferocity when defending the vulnerable.",
         "attack_points": 660,
         "defense_points": 800,
-        "image": "bastet.jpeg"
+        "image": "bastet.png"
       },
       {
         "name": "Ares",
@@ -181,7 +181,7 @@
         "description": "Her poise and figure make her seem beautiful, but the long dress and wide hat hide a cow hoof and a monstrous face. La Diablesse casts spells on unfaithful men to lure them into the forests to their deaths.",
         "attack_points": 500,
         "defense_points": 600,
-        "image": "ladiablesse.jpeg"
+        "image": "ladiablesse.png"
       },
       {
         "name": "Chupacabra",
