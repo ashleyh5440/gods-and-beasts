@@ -12,7 +12,7 @@ const characterSchema = new Schema({
     category: {
         type: String,
         required: true,
-        enum: ['god', 'beast'], //for specific values
+        enum: ['God', 'Beast'], //for specific values
     },
     attack_points: {
         type: Number,
