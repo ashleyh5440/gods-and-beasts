@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 
 import { Carousel } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
 import '../CreateDeck/style.css';
 
 function CreateDeck() {
@@ -92,6 +93,9 @@ function CreateDeck() {
                         Defense: {defense_points}</p>
                     </div>
                 </div>
+                <div className="button-container">
+                    <Button variant="primary">Add to Deck</Button>
+                </div>
             </div>
         );
     };
@@ -118,6 +122,8 @@ function CreateDeck() {
                                         </div>
                                     ))}
                                 </div>
+                                {/* <Button variant="primary">Primary</Button>
+                                <Button variant="primary">Primary</Button> */}
                             </Carousel.Item>
                         ))}
                     </Carousel>
