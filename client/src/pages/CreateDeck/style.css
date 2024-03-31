@@ -105,6 +105,11 @@ section {
     padding: 1%;
     background-color: rgb(198, 152, 36);
     border: none;
+    color: white;
+}
+
+.add-button:hover {
+    background-color: rgb(163, 124, 27);
 }
 
 .buttons-container {

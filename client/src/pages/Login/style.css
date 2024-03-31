@@ -1,0 +1,26 @@
+section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.left {
+    width: 55%;
+    margin: 5% 3%;
+    border: 2px solid green;
+}
+
+.right {
+    width: 35%;
+}
+
+.button {
+    background-color: rgb(198, 152, 36);
+    border: none;
+}
+
+
+
+.button:hover {
+    background-color: rgb(163, 124, 27);
+}
