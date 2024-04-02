@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../LogIn/style.css';
+import './style.css';
 // import 'animate.css';
 
 import Container from 'react-bootstrap/Container';
@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { NavLink } from 'react-router-dom';
 
-// import Auth from '../../utils/auth';
+import Auth from '../../utils/auth';
 import{useMutation} from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 
@@ -53,7 +53,7 @@ function LogIn(props) {
                 <Container className="container">
                     <div className="column">
                         <div>
-                            <h2>Log in</h2>
+                            <h1>Log in</h1>
                         </div>
                         {data ? (
                         <p>Login Successful! You may now head {' '}<Link to="/">back to the homepage.</Link></p>
@@ -79,7 +79,7 @@ function LogIn(props) {
                 </Container>
             </div>
             <div className="right">
-                <h3>Sign up</h3>
+                <h1>Sign up</h1>
                 <Button variant="primary" className="button"><NavLink to="/signup">Sign up</NavLink></Button>
             </div>
         </section>

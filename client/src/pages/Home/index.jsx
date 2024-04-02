@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 function Home() {
     return (
-        <section>
+        <section className="home">
             <h1>Gods and Beasts</h1>
             <div className="logo-container">
                 <img id="logo" src={logo} />
