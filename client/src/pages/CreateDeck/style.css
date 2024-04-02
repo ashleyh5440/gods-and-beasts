@@ -58,6 +58,14 @@ section {
     color: white;
 }
 
+.buttons-container button:hover {
+    background-color: rgb(57, 2, 57);
+}
+
+.buttons-container button:active {
+    background-color: rgb(57, 2, 57) !important;
+}
+
 .card-row {
     display: flex;
     flex-direction: row;
@@ -110,6 +118,10 @@ section {
 
 .add-button:hover {
     background-color: rgb(163, 124, 27);
+}
+
+.add-button:active {
+    background-color: rgb(163, 124, 27) !important;
 }
 
 .buttons-container {
@@ -181,98 +193,3 @@ section {
         }
     }
 }
-
-/* @media screen and (max-width: 768px) {
-    .carousel {
-        width: 100%;
-    }
-
-    .carousel-inner {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 30%;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 20%;
-    }
-}
-
-@media screen and (max-width: 430px) {
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 15%;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .gods-container, .beasts-container {
-        width: 100%;
-    }
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 14%;
-    }
-}
-
-@media screen and (max-width: 360px) {
-    .gods-container, .beasts-container {
-        width: 100%;
-    }
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 10%;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .gods-container, .beasts-container {
-        width: 100%;
-    }
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-left: 1%;
-    }
-}
-
-@media screen and (max-width: 280px) {
-    .gods-container, .beasts-container {
-        width: 100%;
-    }
-    .carousel {
-        width: 100%
-    }
-    .carousel {
-        width: 100%
-    }
-    .carousel-inner {
-        width: 100%;
-        margin-right: 50%;
-    }
-} */

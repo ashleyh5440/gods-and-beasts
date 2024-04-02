@@ -8,9 +8,10 @@ import './index.css'
 import Home from './pages/Home';
 import Game from './pages/Game';
 import Lore from './pages/Lore';
-import CreateDeck from './pages/CreateDeck/';
+import CreateDeck from './pages/CreateDeck';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
+import Options from './pages/Options';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/createdeck',
         element: <CreateDeck />,
+      },
+      {
+        path: '/options',
+        element: <Options />,
       },
       // {
       //   path: '/store',
