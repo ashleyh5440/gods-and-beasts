@@ -12,6 +12,7 @@ import CreateDeck from './pages/CreateDeck';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Options from './pages/Options';
+import ViewDecks from './pages/ViewDecks';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/createdeck',
         element: <CreateDeck />,
+      },
+      {
+        path: '/viewdecks',
+        element: <ViewDecks />,
       },
       {
         path: '/options',
