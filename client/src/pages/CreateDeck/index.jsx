@@ -5,7 +5,7 @@ import { QUERY_CHARACTERS } from "../../utils/queries";
 import ReactCardFlip from 'react-card-flip';
 import { Carousel } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-import '../CreateDeck/style.css';
+import '../CreateDeck/styles.css';
 
 const Card = ({ category, name, image, description, attack_points, defense_points }) => {
     const godCard = "url(../../../public/god.png)";
