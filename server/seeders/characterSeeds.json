@@ -5,7 +5,7 @@
       "description": "Known as Mother of the Deep and Mistress of the Sea, Sedna is the mother of all sea creatures. Those who travel along the sea must pay her reverence or face her wrath.",
       "attack_points": 400,
       "defense_points": 400,
-      "image": "sedna.jpg"
+      "image": "sedna.png"
     },
     {
         "name": "Coyote",
@@ -69,7 +69,7 @@
         "description": "Master of all languages, messenger between the Orisha and humans, and personification of duality, Èṣù plays many roles. He is seen as a villain and a hero equally; unpredictable, clever, and sly.",
         "attack_points": 760,
         "defense_points": 600,
-        "image": "esu.jpg" 
+        "image": "esu.png" 
       },
       {
         "name": "Bastet",
@@ -101,7 +101,7 @@
         "description": "Tied to doomsday and death, Kali destroys evil to defend the innocent. She has four arms, wears a garland of skulls around her waist, and often carries one of the severed heads of her enemies.",
         "attack_points": 800,
         "defense_points": 850,
-        "image": "kali.jpeg" 
+        "image": "kali.png" 
       },
       {
         "name": "Erlang Shen",
@@ -117,7 +117,7 @@
         "description": "Cannibal solar goddess Bila sends black and red dogs to drag humans back to her before roasting eating them. The eternal fire she keeps burning for her meals provides light and energy for the world.",
         "attack_points": 770,
         "defense_points": 400, 
-        "image": "bila.jpeg"
+        "image": "bila.png"
       },
       {
         "name": "Bahloo",
@@ -253,7 +253,7 @@
         "description": "The shapeshifting gumiho appears either as an alluring woman or a nine-tailed fox. When not feeding on the hearts and livers of humans, they use the beads hidden in their mouths to steal energy through a kiss.",
         "attack_points": 770,
         "defense_points": 400,
-        "image": "gumhio.jpeg"
+        "image": "gumhio.png"
       },
       {
         "name": "Papinijuwari",

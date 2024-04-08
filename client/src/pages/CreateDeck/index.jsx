@@ -11,6 +11,7 @@ const Card = ({ category, name, image, description, attack_points, defense_point
     const godCard = "url(../../../public/god.png)";
     const beastCard = "url(../../../public/beast.png)";
 
+    //changes background image based on category
     let backgroundImage;
     if (category === "God") {
         backgroundImage = godCard;
@@ -32,6 +33,7 @@ const Card = ({ category, name, image, description, attack_points, defense_point
         setIsFlipped(!isFlipped);
     };
 
+    //card flips when clicked on
     return (
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
             <div className="card-front" onClick={handleClick}>
@@ -68,8 +70,11 @@ const Card = ({ category, name, image, description, attack_points, defense_point
 function CreateDeck() {
     const [cardsPerSlide, setCardsPerSlide] = useState(4);
     const [activeIndex, setActiveIndex] = useState(0);
-    const carouselRef = useRef(null);
+    // const carouselRef = useRef(null);
+    const godsCarouselRef = useRef(null);
+    const beastsCarouselRef = useRef(null);
 
+        //shows number of cards based on screen size
     useEffect(() => {
         const updateCardsPerSlide = () => {
             if (window.innerWidth <= 500) {
@@ -92,12 +97,15 @@ function CreateDeck() {
         };
     }, []);
 
+    //fetches characters from database
     const { loading, error, data } = useQuery(QUERY_CHARACTERS);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     const characters = data.getCharacters || [];
+
+    //seperates characters based on category
     const godCharacters = characters.filter(character => character.category === 'God');
     const beastCharacters = characters.filter(character => character.category === 'Beast');
     
@@ -113,12 +121,20 @@ function CreateDeck() {
     const chunkedGodCharacters = chunkArray(godCharacters, cardsPerSlide);
     const chunkedBeastCharacters = chunkArray(beastCharacters, cardsPerSlide);
 
-    const handlePrevClick = () => {
-        carouselRef.current.prev();
+    const handleGodsPrevClick = () => {
+        godsCarouselRef.current.prev();
     };
 
-    const handleNextClick = () => {
-        carouselRef.current.next();
+    const handleGodsNextClick = () => {
+        godsCarouselRef.current.next();
+    };
+
+    const handleBeastsPrevClick = () => {
+        beastsCarouselRef.current.prev();
+    };
+
+    const handleBeastsNextClick = () => {
+        beastsCarouselRef.current.next();
     };
 
     return (
@@ -126,7 +142,7 @@ function CreateDeck() {
             <div className="gods-container">
                 <h2>Gods</h2>
                 <div className="carousel-container">
-                    <Carousel ref={carouselRef}>
+                    <Carousel ref={godsCarouselRef}>
                         {chunkedGodCharacters.map((chunk, index) => (
                             <Carousel.Item key={index}>
                                 <div className="card-row">
@@ -147,15 +163,15 @@ function CreateDeck() {
                         ))}
                     </Carousel>
                 </div>
-                <div className="buttons-container">
-                    <Button variant="primary" onClick={handlePrevClick}>&#10094;</Button>
-                    <Button variant="primary" onClick={handleNextClick}>&#10095;</Button>
+                <div className="buttons-container" id="gods">
+                    <Button variant="primary" onClick={handleGodsPrevClick}>&#10094;</Button>
+                    <Button variant="primary" onClick={handleGodsNextClick}>&#10095;</Button>
                 </div>
             </div>
             <div className="beasts-container">
                 <h2>Beasts</h2>
                 <div className="carousel-container">
-                    <Carousel ref={carouselRef}>
+                    <Carousel ref={beastsCarouselRef}>
                         {chunkedBeastCharacters.map((chunk, index) => (
                             <Carousel.Item key={index}>
                                 <div className="card-row">
@@ -176,9 +192,9 @@ function CreateDeck() {
                         ))}
                     </Carousel>
                 </div>
-                <div className="buttons-container">
-                    <Button variant="primary" onClick={handlePrevClick}>&#10094;</Button>
-                    <Button variant="primary" onClick={handleNextClick}>&#10095;</Button>
+                <div className="buttons-container" id="beasts">
+                    <Button variant="primary" onClick={handleBeastsPrevClick}>&#10094;</Button>
+                    <Button variant="primary" onClick={handleBeastsNextClick}>&#10095;</Button>
                 </div>
             </div>
         </section>
