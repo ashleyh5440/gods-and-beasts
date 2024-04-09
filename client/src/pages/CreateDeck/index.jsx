@@ -8,7 +8,7 @@ import { Carousel } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import '../CreateDeck/styles.css';
 
-const Card = ({ id, category, name, image, description, attack_points, defense_points }) => {
+const Card = ({ id, category, name, image, description, attack_points, defense_points, setSelectedCards }) => {
     const godCard = "url(../../../public/god.png)";
     const beastCard = "url(../../../public/beast.png)";
 
@@ -35,19 +35,10 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
     };
 
     const addToDeck = (id, category, name, image, description, attack_points, defense_points) => {
-        handleChosenCard(id);
+        console.log("add button clicked")
+        setSelectedCards(prevSelectedCards => [...prevSelectedCards, id])
         console.log(id, category, name, image, description, attack_points, defense_points);
     };
-
-    const handleChosenCard = (id) => {
-        setSelectedCards(prevSelectedCards => {
-            const updatedSelectedCards = [...prevSelectedCards, id];
-            console.log("selected cards:", updatedSelectedCards, selectedCards.length);
-            return updatedSelectedCards
-        });
-    };
-
-    const [selectedCards, setSelectedCards] = useState([]);
 
     //card flips when clicked on
     return (
@@ -93,7 +84,7 @@ function CreateDeck() {
     const beastsCarouselRef = useRef(null);
 
     useEffect (() => {
-        console.log(selectedCards);
+        console.log("selected cards:", selectedCards, selectedCards.length);
         if (selectedCards.length === 10) {
             console.log("at ten?");
         }
@@ -120,6 +111,10 @@ function CreateDeck() {
             window.removeEventListener("resize", updateCardsPerSlide);
         };
     }, []);
+
+    const handleBeginClick = () => {
+        console.log(selectedCards);
+    }
 
     //fetches characters from database
     const { loading, error, data } = useQuery(QUERY_CHARACTERS);
@@ -161,22 +156,6 @@ function CreateDeck() {
         beastsCarouselRef.current.next();
     };
 
-    const handleBeginClick = () => {
-        console.log(selectedCards);
-    }
-
-    const renderBeginButton = () => {
-        console.log("begin button, selected cards length:", selectedCards.length);
-        if (selectedCards.length === 10) {
-            return (
-                <div className="begin-button">
-                    <Button variant="primary" onClick={handleBeginClick}><NavLink to="/game">Begin</NavLink></Button>
-                </div>
-            );
-        } 
-        return null;
-    };
-
     return (
         <section>
             <div className="intro">
@@ -200,7 +179,7 @@ function CreateDeck() {
                                                 description={character.description}
                                                 attack_points={character.attack_points}
                                                 defense_points={character.defense_points}
-                                                // handleChosenCard={handleChosenCard}
+                                                setSelectedCards={setSelectedCards}
                                             />
                                         </div>
                                     ))}
@@ -231,6 +210,7 @@ function CreateDeck() {
                                                 description={character.description}
                                                 attack_points={character.attack_points}
                                                 defense_points={character.defense_points}
+                                                setSelectedCards={setSelectedCards}
                                             />
                                         </div>
                                     ))}
@@ -245,10 +225,11 @@ function CreateDeck() {
                 </div>
             </div>
             <br />
-            {renderBeginButton()}
-                {/* <div className="begin-button">
+            {selectedCards.length === 10 && (
+                <div className="begin-button">
                     <Button variant="primary" onClick={handleBeginClick}><NavLink to="/game">Begin</NavLink></Button>
-                </div> */}
+                </div>
+            )}
         </section>
     );
 }
