@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
+import { NavLink } from 'react-router-dom';
 
 import ReactCardFlip from 'react-card-flip';
 import { Carousel } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import '../CreateDeck/styles.css';
 
-const Card = ({ category, name, image, description, attack_points, defense_points }) => {
+const Card = ({ id, category, name, image, description, attack_points, defense_points }) => {
     const godCard = "url(../../../public/god.png)";
     const beastCard = "url(../../../public/beast.png)";
 
@@ -33,47 +34,70 @@ const Card = ({ category, name, image, description, attack_points, defense_point
         setIsFlipped(!isFlipped);
     };
 
+    const addToDeck = (id, category, name, image, description, attack_points, defense_points) => {
+        handleChosenCard(id);
+        console.log(id, category, name, image, description, attack_points, defense_points);
+    };
+
+    const handleChosenCard = (id) => {
+        setSelectedCards(prevSelectedCards => {
+            const updatedSelectedCards = [...prevSelectedCards, id];
+            console.log("selected cards:", updatedSelectedCards, selectedCards.length);
+            return updatedSelectedCards
+        });
+    };
+
+    const [selectedCards, setSelectedCards] = useState([]);
+
     //card flips when clicked on
     return (
-        <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-            <div className="card-front" onClick={handleClick}>
-                <div className={`card ${category}`} style={cardStyle}>
-                    <div className="card-content">
-                        <div className="name-category">
-                            <h3>{name}</h3>
-                        </div>
-                        <div className="card-img">
-                            <img src={`/images/${image}`} alt={name} />
-                        </div>
-                    </div>
-                </div>
-                <Button variant="secondary" className="add-button">Add to deck</Button>
-            </div>
-            <div className="card-back" onClick={handleClick}>
-                <div className={`card ${category}`} style={cardStyle}>
-                    <div className="card-content">
-                        <div className="character-info">
-                            <p>{description}</p>
-                        </div>
-                        <div className="points">
-                            <p>Attack: {attack_points}<br/>
-                            Defense: {defense_points}</p>
+        <div>
+            <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+                <div className="card-front" onClick={handleClick}>
+                    <div className={`card ${category}`} style={cardStyle}>
+                        <div className="card-content">
+                            <div className="name-category">
+                                <h3>{name}</h3>
+                            </div>
+                            <div className="card-img">
+                                <img src={`/images/${image}`} alt={name} />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Button variant="secondary" className="add-button">Add to deck</Button>
-            </div>
-        </ReactCardFlip>
+                <div className="card-back" onClick={handleClick}>
+                    <div className={`card ${category}`} style={cardStyle}>
+                        <div className="card-content">
+                            <div className="character-info">
+                                <p>{description}</p>
+                            </div>
+                            <div className="points">
+                                <p>Attack: {attack_points}<br/>
+                                Defense: {defense_points}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ReactCardFlip>
+            <Button variant="secondary" className="add-button" onClick={() => addToDeck(id, category, name, image, description, attack_points, defense_points)}>Add to deck</Button>
+
+        </div>
     );
 };
 
 function CreateDeck() {
     const [cardsPerSlide, setCardsPerSlide] = useState(4);
+    const [selectedCards, setSelectedCards] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
-    // const carouselRef = useRef(null);
     const godsCarouselRef = useRef(null);
     const beastsCarouselRef = useRef(null);
 
+    useEffect (() => {
+        console.log(selectedCards);
+        if (selectedCards.length === 10) {
+            console.log("at ten?");
+        }
+    }, [selectedCards]);
         //shows number of cards based on screen size
     useEffect(() => {
         const updateCardsPerSlide = () => {
@@ -137,10 +161,30 @@ function CreateDeck() {
         beastsCarouselRef.current.next();
     };
 
+    const handleBeginClick = () => {
+        console.log(selectedCards);
+    }
+
+    const renderBeginButton = () => {
+        console.log("begin button, selected cards length:", selectedCards.length);
+        if (selectedCards.length === 10) {
+            return (
+                <div className="begin-button">
+                    <Button variant="primary" onClick={handleBeginClick}><NavLink to="/game">Begin</NavLink></Button>
+                </div>
+            );
+        } 
+        return null;
+    };
+
     return (
         <section>
+            <div className="intro">
+                <h2>Build Your Army</h2>
+                <p>Choose ten cards to take into battle.</p>
+            </div>
             <div className="gods-container">
-                <h2>Gods</h2>
+                <h3>Gods</h3>
                 <div className="carousel-container">
                     <Carousel ref={godsCarouselRef}>
                         {chunkedGodCharacters.map((chunk, index) => (
@@ -149,12 +193,14 @@ function CreateDeck() {
                                     {chunk.map((character, idx) => (
                                         <div className={`col-md-${12 / cardsPerSlide}`} key={idx}>
                                             <Card
+                                                id={character._id}
                                                 category={character.category}
                                                 name={character.name}
                                                 image={character.image}
                                                 description={character.description}
                                                 attack_points={character.attack_points}
                                                 defense_points={character.defense_points}
+                                                // handleChosenCard={handleChosenCard}
                                             />
                                         </div>
                                     ))}
@@ -169,7 +215,7 @@ function CreateDeck() {
                 </div>
             </div>
             <div className="beasts-container">
-                <h2>Beasts</h2>
+                <h3>Beasts</h3>
                 <div className="carousel-container">
                     <Carousel ref={beastsCarouselRef}>
                         {chunkedBeastCharacters.map((chunk, index) => (
@@ -178,6 +224,7 @@ function CreateDeck() {
                                     {chunk.map((character, idx) => (
                                         <div className={`col-md-${12 / cardsPerSlide}`} key={idx}>
                                             <Card 
+                                                id={character._id}
                                                 category={character.category}
                                                 name={character.name}
                                                 image={character.image}
@@ -197,6 +244,11 @@ function CreateDeck() {
                     <Button variant="primary" onClick={handleBeastsNextClick}>&#10095;</Button>
                 </div>
             </div>
+            <br />
+            {renderBeginButton()}
+                {/* <div className="begin-button">
+                    <Button variant="primary" onClick={handleBeginClick}><NavLink to="/game">Begin</NavLink></Button>
+                </div> */}
         </section>
     );
 }

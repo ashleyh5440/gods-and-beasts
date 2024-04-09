@@ -15,10 +15,8 @@ function Options() {
                 some pic here
             </div>
             <div className="right">
-                <Button variant="primary" className="button"><NavLink to="/viewdecks">View decks</NavLink></Button>
-                <Button variant="primary" className="button"><NavLink to="/createdeck">Create new deck</NavLink></Button>
                 <Button variant="primary" className="button"><NavLink to="/viewscores">View scores</NavLink></Button>
-                <Button variant="primary" className="button"><NavLink to="/gaame">New game</NavLink></Button>
+                <Button variant="primary" className="button"><NavLink to="/createdeck">New game</NavLink></Button>
             </div>
         </section>
     )
