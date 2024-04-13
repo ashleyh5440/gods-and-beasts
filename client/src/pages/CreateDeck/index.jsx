@@ -2,13 +2,19 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 import { NavLink } from 'react-router-dom';
+import Draggable from 'gsap/Draggable';
+
+import Cards from '../../components/CardDeck';
+import CardDeck from '../../components/CardDeck/CardDeck.jsx';
 
 import ReactCardFlip from 'react-card-flip';
 import { Carousel } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+
 import '../CreateDeck/styles.css';
 
 const Card = ({ id, category, name, image, description, attack_points, defense_points, selectedCards, setSelectedCards, exceedLimit, setExceedLimit }) => {
+    const cardRef = useRef(null);
     const godCard = "url(../../../public/god.png)";
     const beastCard = "url(../../../public/beast.png)";
 
@@ -34,20 +40,43 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
         setIsFlipped(!isFlipped);
     };
 
-    const addToDeck = (id, category, name, image, description, attack_points, defense_points, selectedCards, exceedLimit, setExceedLimit) => {
+    const handleDrag = (event) => {
+        console.log("Drag event triggered");
+        const { offsetX, offsetY } = event;
+        console.log("offsetX:", offsetX, "offsetY:", offsetY);
+    
+        if (Math.abs(offsetX) >= 50 || Math.abs(offsetY) >= 50) {
+          addToDeck({ id, category, name, image, description, attack_points, defense_points });
+        }
+    };
+    
+    const addToDeck = (card) => {
         if (selectedCards.length < 10) {
-            console.log("add button clicked")
-            setSelectedCards(prevSelectedCards => [...prevSelectedCards, id])
-            console.log(id, category, name, image, description, attack_points, defense_points);
+            setSelectedCards(prevSelectedCards => [...prevSelectedCards, card]);
+            setExceedLimit(false);
         } else {
             setExceedLimit(true);
             console.log("can only choose 10");
         }
-    };
+    };   
+    
+    useEffect(() => {
+        if (cardRef.current) {
+            console.log("reference:", cardRef.current);
+            Draggable.create(cardRef.current, {
+                type: "x",
+                bounds: { minX: -200, maxX: 200 },
+                edgeResistance: 0.75,
+                onDragEnd: handleDrag
+            });
+        }
+    }, [id, handleDrag]);
 
     //card flips when clicked on
     return (
-        <div>
+        <div id={`card-${id}`}>
+            <div ref={cardRef} draggable="true" 
+            onDrag={handleDrag}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                 <div className="card-front" onClick={handleClick}>
                     <div className={`card ${category}`} style={cardStyle}>
@@ -75,11 +104,14 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
                     </div>
                 </div>
             </ReactCardFlip>
+            </div>
+            
             {/* add card to deck to use it to play */}
-            <Button variant="secondary" className="add-button" onClick={() => addToDeck(id, category, name, image, description, attack_points, defense_points, selectedCards, exceedLimit, setExceedLimit)}>Add to deck</Button>
+            <Button variant="secondary" className="add-button" onClick={() => addToDeck({ id, category, name, image, description, attack_points, defense_points }, exceedLimit, setExceedLimit)}>Add to deck</Button>
 
         </div>
     );
+    
 };
 
 function CreateDeck() {
@@ -89,6 +121,16 @@ function CreateDeck() {
     const [activeIndex, setActiveIndex] = useState(0);
     const godsCarouselRef = useRef(null);
     const beastsCarouselRef = useRef(null);
+
+      const addToDeck = (card) => {
+        if (selectedCards.length < 10) {
+            setSelectedCards(prevSelectedCards => [...prevSelectedCards, card]);
+            setExceedLimit(false);
+        } else {
+            setExceedLimit(true);
+            console.log("can only choose 10");
+        }
+    };   
 
     useEffect (() => {
         console.log("selected cards:", selectedCards, selectedCards.length);
@@ -164,7 +206,7 @@ function CreateDeck() {
     };
 
     return (
-        <section>
+        <section id="create-container">
             <div className="intro">
                 <h2>Build Your Army</h2>
                 <p>Choose ten cards to take into battle.</p>
@@ -190,6 +232,7 @@ function CreateDeck() {
                                                 setSelectedCards={setSelectedCards}
                                                 exceedLimit={exceedLimit}
                                                 setExceedLimit={setExceedLimit}
+                                                addToDeck={addToDeck}
                                             />
 
                                         </div>
@@ -225,7 +268,8 @@ function CreateDeck() {
                                                 setSelectedCards={setSelectedCards}
                                                 exceedLimit={exceedLimit}
                                                 setExceedLimit={setExceedLimit}
-                                            />
+                                                addToDeck={{addToDeck}}
+                                            /> 
 
                                         </div>
                                     ))}
@@ -240,6 +284,13 @@ function CreateDeck() {
                 </div>
             </div>
             <br />
+            {/* card deck of user's choices */}
+            <div id="user-deck">
+                <CardDeck
+                    selectedCards={selectedCards}
+                    exceedLimit={exceedLimit}
+                />
+            </div>
             <div className="exceeded">
                 {exceedLimit && <p>You can only choose 10 cards.</p>}
             </div>

@@ -4,12 +4,32 @@ import { Draggable } from 'gsap/Draggable';
 import '../CardDeck/styles.css';
 import Button from 'react-bootstrap/Button';
 
+import ReactCardFlip from 'react-card-flip';
+
 gsap.registerPlugin(Draggable);
 
-const CardDeck = ({ cards, currentIndex, nextCard, prevCard }) => {
-  const [deck, setDeck] = useState(cards);
+  const CardDeck = ({ currentIndex, selectedCards, exceedLimit, category }) => {
+  // const [deck, setDeck] = useState(selectedCards);
+  const [deck, setDeck] = useState(selectedCards.map(() => ({ isFlipped: false })));
   const cardRefs = useRef([]);
   const lastActionRef = useRef(null);
+
+  const getBackgroundImage = (category) => {
+    switch (category) {
+      case 'God':
+        return "url(../../../public/god.png)";
+      case 'Beast':
+        return "url(../../../public/beast.png)";
+      default:
+        return "";
+    }
+  };
+
+  const backgroundStyles = {
+    backgroundRepeat: "no repeat",
+    backgroundSize: "100% 100%",
+    backgroundPosition: "center",
+  };
 
   useEffect(() => {
     if (cardRefs.current.length > 0 && currentIndex >= 0 && currentIndex < cardRefs.current.length) {
@@ -65,6 +85,10 @@ const CardDeck = ({ cards, currentIndex, nextCard, prevCard }) => {
     );
   };
   
+  useEffect(() => {
+    setDeck(selectedCards);
+  }, [selectedCards]);
+
   // Drag handler
   useEffect(() => {
     cardRefs.current.forEach((card, index) => {
@@ -86,23 +110,55 @@ const CardDeck = ({ cards, currentIndex, nextCard, prevCard }) => {
     });
   }, [deck]);
 
+  const [isFlipped, setIsFlipped] = useState(false);
+
+    const handleDeckClick = (index) => {
+        setDeck((prevDeck) => {
+          const newDeck = [...prevDeck];
+          newDeck[index].isFlipped = !newDeck[index].isFlipped;
+          return newDeck;
+        })
+        console.log(handleDeckClick)
+    };
+
+
   return (
-    <div className="card-container">
+    <div className="card-deck-container">
       {deck.map((card, index) => (
-        <div
-          className="card"
-          key={index}
-          ref={(el) => (cardRefs.current[index] = el)}
-          style={{ position: "absolute" }}
+        <ReactCardFlip 
+          isFlipped={card.isFlipped} 
+          flipDirection="horizontal" 
+          key={index} 
+          ref={(el) => (cardRefs.current[index] = el)} 
         >
-          {card}
+        {/* card front */}
+        <div className="selected-card" onClick={() => handleDeckClick(index, card)} style={{ backgroundImage: getBackgroundImage(card.category), ...backgroundStyles, position:"absolute"}}>
+          <div className="card-content">
+            <div className="name-category">
+              <h3>{card.name}</h3>
+            </div>
+            <div className="card-img">
+              <img src={`/images/${card.image}`} alt={card.name} />
+            </div>
+          </div>
         </div>
-      ))}
-        <div className="nav-buttons">
-                    <Button variant="primary" onClick={prevCard}>Previous</Button>
-                    <Button variant="primary" onClick={nextCard}>Next</Button>
-        </div>
-    </div>
+        
+        {/* card back */}
+          <div className="selected-card" onClick={() => handleDeckClick(index, card)} style={{ backgroundImage: getBackgroundImage(card.category), ...backgroundStyles, position:"absolute"}}>
+            <div className="card-content">
+              <div className="character-info">
+                <p>{card.description}</p>
+              </div>
+              <div className="points">
+                <p>Attack: {card.attack_points}<br/>
+                Defense: {card.defense_points}</p>
+              </div>
+            </div>
+          </div>
+        </ReactCardFlip>
+    ))}
+    {exceedLimit && <p>You can only choose 10 cards.</p>}
+    </div> 
   );
 };
 

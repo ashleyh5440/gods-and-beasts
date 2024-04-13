@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './style.css';
+import './styles.css';
 // import 'animate.css';
 
 import Container from 'react-bootstrap/Container';
@@ -48,7 +48,7 @@ function LogIn(props) {
       });
     }; 
     return (
-        <section>
+        <section id="login-container">
             <div className="left">
                 <Container className="container">
                     <div className="column">

@@ -6,11 +6,11 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { NavLink } from 'react-router-dom';
 
-import './style.css';
+import '../Options/styles.css';
 
 function Options() {
     return (
-        <section>
+        <section id="options-container">
             <div className="left">
                 some pic here
             </div>

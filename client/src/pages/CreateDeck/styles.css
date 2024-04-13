@@ -1,9 +1,3 @@
-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 a {
     text-decoration: none;
     color: white;
@@ -157,6 +151,31 @@ a {
 
 .exceeded {
     width: 100%;
+}
+
+.selected-card {
+    border: 2px solid green;
+    width: 210px;
+    height: 280px;
+}
+
+.selected-card img {
+    width: 99%;
+    height: 182px;
+}
+
+#create-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#user-deck {
+    border: 2px solid red;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media screen and (max-width: 768px) {

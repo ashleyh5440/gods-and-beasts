@@ -1,9 +1,3 @@
-section {
-    width: 30%;
-    margin-left: 15%;
-    border: 2px solid green;
-}
-
 .card {
     width: 200px;
     height: 280px;
@@ -24,7 +18,12 @@ section {
     flex-direction: row;
     justify-content: space-between;
     width: 200px;
-    
     border: 2px solid blue;
 }
+
+#carddeck-container {
+    width: 30%;
+    margin-left: 15%;
+    border: 2px solid green;
+} 
 

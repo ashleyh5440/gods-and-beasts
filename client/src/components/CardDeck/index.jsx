@@ -27,7 +27,7 @@ function Deck() {
     };
 
     return (
-        <section>
+        <section id="carddeck-container">
             <div className="deck-container">
                 <CardDeck
                 currentIndex={currentIndex}
@@ -35,10 +35,6 @@ function Deck() {
                 nextCard={nextCard}
                 prevCard={prevCard}
                 />
-                {/* <div className="nav-buttons">
-                    <Button variant="primary" onClick={prevCard}>Previous</Button>
-                    <Button variant="primary" onClick={nextCard}>Next</Button>
-                </div> */}
             </div>
         </section>
     );
