@@ -11,9 +11,9 @@ import ReactCardFlip from 'react-card-flip';
 import { Carousel } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 
-import '../CreateDeck/styles.css';
+import '../CreateDeck/styles.css'; 
 
-const Card = ({ id, category, name, image, description, attack_points, defense_points, selectedCards, setSelectedCards, exceedLimit, setExceedLimit }) => {
+const Card = ({ id, category, name, image, description, attack_points, defense_points, selectedCards, setSelectedCards, exceedLimit, setExceedLimit, addToDeck }) => {
     const cardRef = useRef(null);
     const godCard = "url(../../../public/god.png)";
     const beastCard = "url(../../../public/beast.png)";
@@ -41,28 +41,16 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
     };
 
     const handleDrag = (event) => {
-        console.log("Drag event triggered");
         const { offsetX, offsetY } = event;
-        console.log("offsetX:", offsetX, "offsetY:", offsetY);
     
         if (Math.abs(offsetX) >= 50 || Math.abs(offsetY) >= 50) {
           addToDeck({ id, category, name, image, description, attack_points, defense_points });
         }
-    };
-    
-    const addToDeck = (card) => {
-        if (selectedCards.length < 10) {
-            setSelectedCards(prevSelectedCards => [...prevSelectedCards, card]);
-            setExceedLimit(false);
-        } else {
-            setExceedLimit(true);
-            console.log("can only choose 10");
-        }
-    };   
+    };  
     
     useEffect(() => {
         if (cardRef.current) {
-            console.log("reference:", cardRef.current);
+            // console.log("reference:", cardRef.current);
             Draggable.create(cardRef.current, {
                 type: "x",
                 bounds: { minX: -200, maxX: 200 },
@@ -108,7 +96,6 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
             
             {/* add card to deck to use it to play */}
             <Button variant="secondary" className="add-button" onClick={() => addToDeck({ id, category, name, image, description, attack_points, defense_points }, exceedLimit, setExceedLimit)}>Add to deck</Button>
-
         </div>
     );
     
@@ -135,7 +122,6 @@ function CreateDeck() {
     useEffect (() => {
         console.log("selected cards:", selectedCards, selectedCards.length);
         if (selectedCards.length === 10) {
-            console.log("at ten?");
         }
     }, [selectedCards]);
         //shows number of cards based on screen size
@@ -232,6 +218,7 @@ function CreateDeck() {
                                                 setSelectedCards={setSelectedCards}
                                                 exceedLimit={exceedLimit}
                                                 setExceedLimit={setExceedLimit}
+                                                // addToDeck={() => addToDeck(character)}
                                                 addToDeck={addToDeck}
                                             />
 
@@ -268,7 +255,8 @@ function CreateDeck() {
                                                 setSelectedCards={setSelectedCards}
                                                 exceedLimit={exceedLimit}
                                                 setExceedLimit={setExceedLimit}
-                                                addToDeck={{addToDeck}}
+                                                // addToDeck={() => addToDeck(character)}
+                                                addToDeck={addToDeck}
                                             /> 
 
                                         </div>
@@ -294,9 +282,16 @@ function CreateDeck() {
             <div className="exceeded">
                 {exceedLimit && <p>You can only choose 10 cards.</p>}
             </div>
-            {selectedCards.length === 10 && (
+            {/* {selectedCards.length === 10 && (
                 <div className="begin-button">
                     <Button variant="primary" onClick={handleBeginClick}><NavLink to="/game">Begin</NavLink></Button>
+                </div>
+            )} */}
+            {selectedCards.length === 10 && (
+                <div className="begin-button">
+                    <Button variant="primary">
+                        <NavLink to={{ pathname: "/game", state: { selectedCards: selectedCards } }}>Begin</NavLink>
+                    </Button>
                 </div>
             )}
         </section>

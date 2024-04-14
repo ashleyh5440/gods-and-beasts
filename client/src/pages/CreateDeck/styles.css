@@ -38,7 +38,7 @@ a {
     width: 100%;
 }
 
-.card {
+.card, .selected-card {
     width: 200px;
     height: 280px;
     font-size: 13px;
@@ -87,7 +87,7 @@ a {
     margin-left: 7.5%;
 }
 
-.card-img {
+.card-img, .selected-card img {
     width: 99%;
     height: 182px;
 }
@@ -153,17 +153,6 @@ a {
     width: 100%;
 }
 
-.selected-card {
-    border: 2px solid green;
-    width: 210px;
-    height: 280px;
-}
-
-.selected-card img {
-    width: 99%;
-    height: 182px;
-}
-
 #create-container {
     display: flex;
     flex-direction: column;
@@ -171,7 +160,6 @@ a {
 }
 
 #user-deck {
-    border: 2px solid red;
     width: 80%;
     display: flex;
     flex-direction: column;

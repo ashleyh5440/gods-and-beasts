@@ -1,0 +1,25 @@
+.decks {
+    width: 40%;
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid red;
+}
+
+.opponent-deck, .user-deck {
+    width: 95%;
+    border: 2px solid white;
+}
+
+.arena {
+    width: 60%;
+    margin: 2%;
+    border: 2px solid blue;
+}
+
+#game-page {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid green;
+}
