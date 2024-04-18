@@ -44,8 +44,8 @@ function SignUp() {
     };
 
     return (
-        <section>
-            <Container className="container">
+        <section className="signup-page">
+            <Container className="signup-page-container">
                 <div className="column">
                     <h1>Sign up</h1>
                     {data ? (
@@ -74,12 +74,11 @@ function SignUp() {
                                     <Form.Control type="password" name="password" value={formState.password} onChange={handleChange}/>
                                 </Col>
                             </Form.Group>
-                            <Button variant="primary" className="button" type="submit">Sign Up</Button>
+                            <Button variant="primary" type="submit">Sign Up</Button>
                         </Form>
                     </div>
                         </>
                     )}
-
                 </div>
             </Container>
         </section>

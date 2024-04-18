@@ -1,4 +1,4 @@
-section h1 {
+.home-page h1 {
     color: white;
     font-family: 'Italianno', cursive;
     font-size: 550%;
@@ -35,17 +35,18 @@ i:nth-child(3n + 3) {
     }
 }
 
-.home {
+.home-page {
     margin: 0%;
     height: 100vh;
     overflow: hidden !important;
 }
 
-.container {
+.home-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 5%;
 }
 
 .logo-container {
@@ -53,28 +54,28 @@ i:nth-child(3n + 3) {
     margin-bottom: 3%;
 }
 
-.button-container {
+.home-button-container {
     width: 60%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.button-container Button, .button-container Button:focus, .button-container Button:active {
+.home-button-container button {
     background-color: rgb(198, 152, 36);
-    padding: 2% 4%;
     border: none;
-    box-shadow: 3px 3px rgb(163, 124, 27);
+    font-family: 'Italianno', cursive;
+    font-size: 40px;
+    padding: 3% 5%;
 }
 
-.button-container Button:hover {
-    background-color: rgb(163, 124, 27);
-    box-shadow: 3px 3px rgb(143, 108, 22);
+.home-button-container button:focus, .home-button-container button:active, .home-button-container button:hover {
+    background-color: rgb(163, 124, 27) !important;
 }
 
 .button-container Button a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 #logo {

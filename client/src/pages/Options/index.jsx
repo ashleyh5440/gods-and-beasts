@@ -10,13 +10,15 @@ import '../Options/styles.css';
 
 function Options() {
     return (
-        <section id="options-container">
-            <div className="left">
+        <section className="options-page">
+            <div className="options-page-container">
+                <div className="options-left">
                 some pic here
-            </div>
-            <div className="right">
-                <Button variant="primary" className="button"><NavLink to="/viewscores">View scores</NavLink></Button>
-                <Button variant="primary" className="button"><NavLink to="/createdeck">New game</NavLink></Button>
+                </div>
+                <div className="options-right">
+                    <Button variant="primary" className="button"><NavLink to="/viewscores">View scores</NavLink></Button>
+                    <Button variant="primary" className="button"><NavLink to="/createdeck">New game</NavLink></Button>
+                </div>
             </div>
         </section>
     )

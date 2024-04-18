@@ -48,9 +48,9 @@ function LogIn(props) {
       });
     }; 
     return (
-        <section id="login-container">
-            <div className="left">
-                <Container className="container">
+        <section className="login-page">
+            <div className="login-container">
+                <Container className="container-box">
                     <div className="column">
                         <div>
                             <h1>Log in</h1>
@@ -78,7 +78,7 @@ function LogIn(props) {
                     </div>
                 </Container>
             </div>
-            <div className="right">
+            <div className="signup-container">
                 <h1>Sign up</h1>
                 <Button variant="primary" className="button"><NavLink to="/signup">Sign up</NavLink></Button>
             </div>

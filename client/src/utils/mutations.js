@@ -44,24 +44,24 @@ export const ADD_CARD = gql`
     }
 `;
 
-export const ADD_DECK = gql`
-    mutation addDeck($userId: ID!, $deckName:String!) {
-        addDeck(userId: $userId, deck_name: $deckName) {
-            _id
-            user_id
-            deck_name
-            characters {
-                _id
-                name
-                description
-                category
-                attack_points
-                defense_points
-                image
-            }
-        }
-    }
-`;
+// export const ADD_DECK = gql`
+//     mutation addDeck($userId: ID!, $deckName:String!) {
+//         addDeck(userId: $userId, deck_name: $deckName) {
+//             _id
+//             user_id
+//             deck_name
+//             characters {
+//                 _id
+//                 name
+//                 description
+//                 category
+//                 attack_points
+//                 defense_points
+//                 image
+//             }
+//         }
+//     }
+// `;
 
 export const ADD_WIN = gql`
     mutation addWin($userId: ID!) {
@@ -107,21 +107,21 @@ mutation removeCard($characterId: ID!, $userDeckId: ID!) {
 }
 `;
 
-export const REMOVE_DECK = gql`
-mutation removeDeck($userId: ID!, $deckName: String!) {
-    removeDeck(userId: $userId, deck_name: $deckName) {
-        _id
-        user_id
-        deck_name
-        characters {
-            _id
-            name
-            description
-            category
-            attack_points
-            defense_points
-            image
-        }
-    }
-}
-`;
+// export const REMOVE_DECK = gql`
+// mutation removeDeck($userId: ID!, $deckName: String!) {
+//     removeDeck(userId: $userId, deck_name: $deckName) {
+//         _id
+//         user_id
+//         deck_name
+//         characters {
+//             _id
+//             name
+//             description
+//             category
+//             attack_points
+//             defense_points
+//             image
+//         }
+//     }
+// }
+// `;

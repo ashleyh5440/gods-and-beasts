@@ -1,6 +1,25 @@
+.game-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../../../public/battleground.gif);
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+
+}
+
+.game-page-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 7%;
+}
+
 .decks {
     width: 40%;
-    margin: 2%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,18 +27,56 @@
 }
 
 .opponent-deck, .user-deck {
-    width: 95%;
+    width: 100%;
+    margin: 2%;
     border: 2px solid white;
 }
 
 .arena {
-    width: 60%;
-    margin: 2%;
+    width: 57%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 2px solid blue;
+    
 }
 
-#game-page {
+.battleground {
+    width: 70%;
+    height: 280px;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    margin-top: 8%;
     border: 2px solid green;
+}
+
+.opponent-card {
+    width: 200px;
+    height: 280px;
+    border: 2px solid red;
+}
+
+.user-card {
+    width: 200px;
+    height: 280px;
+    border: 2px solid black;
+}
+
+@media screen and (max-width: 768px) {
+    .game-page-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .decks, .arena {
+        width: 90%;
+    }
+
+    .decks {
+        display: flex;
+        flex-direction: row;
+    }
 }
