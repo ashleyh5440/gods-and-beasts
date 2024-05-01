@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 
@@ -68,29 +68,28 @@ function Game() {
                 //card with the highest number of attack points wins and absorbs loser’s attack points into their life points
             if (opponentSelection === 'opAttack') {
                 if (userAttack > opponentAttack) {
-                    wins++
-                    opponentLifePoints -= userAttack //decrease opponent's life points by user's attack points
-                    userLifePoints += opponentAttack //increase user's life points by opponent's attack points
+                    setWins((prev) => prev + 1);
+                    setOpponentLifePoints ((prev) => prev - userAttack); //decrease opponent's life points by user's attack points
+                    setUserLifePoints ((prev) => prev + opponentAttack); //increase user's life points by opponent's attack points
                 } else if (userAttack === opponentAttack) {
-                    ties++
+                    setTies((prev) => prev + 1);
                     //do nothing
                 } else {
-                    losses++
-                    opponentLifePoints = parseInt(opponentLifePoints) + parseInt(userAttack);
-                    userLifePoints -= opponentAttack
+                    setLosses((prev) => prev + 1);
+                    setOpponentLifePoints ((prev) => prev + userAttack);
+                    setUserLifePoints((prev) => prev - opponentAttack);
                 }
                     //opponent defends
                     //if attacker loses, half of the attack points from that card are taken from their total life points; if defender loses, the card’s defense points are subtracted from their total life points
             } else if (opponentSelection === 'opDefend') {
                 if (userAttack > opponentDefend) {
-                    wins++
-                    opponentLifePoints -= userAttack
-
+                    setWins((prev) => prev + 1);
+                    setOpponentLifePoints((prev) => prev - userAttack);
                 } else if (userAttack === opponentDefend) {
-                    ties++
+                    setTies((prev) => prev + 1);
                 } else {
-                    lossess++
-                    userLifePoints -= Math.floor(opponentAttack / 2); 
+                    setLosses((prev) => prev + 1);
+                    setUserLifePoints((prev) => prev - Math.floor(opponentAttack / 2));
                 }
             }
             //userDefends
@@ -98,17 +97,17 @@ function Game() {
                 //opponent attacks
             if (opponentSelection === 'opAttack') {
                 if (userDefend > opponentAttack) {
-                    wins++
-                    userLifePoints += opponentAttack
+                    setWins((prev) => prev + 1);
+                    setUserLifePoints ((prev) => prev + opponentAttack);
                 } else if (userDefend === opponentAttack) {
-                    ties++
+                    setTies((prev) => prev + 1);
                 } else {
-                    lossess++
-                    userLifePoints -= Math.floor(opponentAttack / 2);
+                    setLosses((prev) => prev + 1);
+                    setUserLifePoints((prev) => prev - Math.floor(opponentAttack / 2));
                 }
                     //opponent defends
             } else if (opponentSelection === 'opDefend') {
-                ties++
+                setTies((prev) => prev + 1);
             }
         }
 
