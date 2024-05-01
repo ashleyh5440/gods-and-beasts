@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,  } from "react-router-dom";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 
 import '../Game/styles.css';
@@ -8,11 +8,9 @@ function Game() {
 
     //getting cards from CreateDeck
     const location = useLocation();
-
     const initialSelectedCards = location.state ? location.state.selectedCards : [];
+    const [selectedCards, setSelectedCards] = useState(initialSelectedCards); // set selectedCards to state
 
-    // Set selectedCards to state
-    const [selectedCards, setSelectedCards] = useState(initialSelectedCards);
     useEffect(() => {
         if (location.state && location.state.selectedCards) {
             console.log("Selected cards updated in Game component:", location.state.selectedCards);
@@ -144,8 +142,10 @@ function Game() {
                         
                     <div className="user-deck">
                         <h3>Your Deck</h3>
+                        {/* <div className="card-row">
+                            {location.state && location.state.selectedCards && location.state.selectedCards.map((card, index) => ( */}
                         <div className="card-row">
-                            {location.state && location.state.selectedCards && location.state.selectedCards.map((card, index) => (
+                            {selectedCards.map((card, index) => (
                             <div className={`col-md-${12 / location.state.selectedCards.length}`} key={index}>
                                 <div className={`card ${card.category}`}>
                                     <div className="card-content">
@@ -174,3 +174,23 @@ function Game() {
 }
 
 export default Game;
+
+{/* <div className="user-deck">
+                    <h3>Your Deck</h3>
+                    <div className="card-row">
+                        {selectedCards.map((card, index) => (
+                            <div className={`col-md-${12 / selectedCards.length}`} key={index}>
+                                <div className={`card ${card.category}`}>
+                                    <div className="card-content">
+                                        <div className="name-category">
+                                            <h4>{card.name}</h4>
+                                        </div>
+                                        <div className="card-img">
+                                            <img src={`/images/${card.image}`} alt={card.name} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div> */}
