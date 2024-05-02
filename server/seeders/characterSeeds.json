@@ -149,7 +149,7 @@
         "description": "Tales of the seven-foot-tall hairy wild men of the forests have been spoken about for hundreds of years. The elusive Sasquatch are guardians of the wilderness and are not afraid to defend it.",
         "attack_points": 400,
         "defense_points": 700,
-        "image": "sasquatch.jpeg"
+        "image": "sasquatch.png"
       },
       {
         "name": "Windigo",
@@ -157,7 +157,7 @@
         "description": "A towering figure with ash-gray skin, long claws, and lips chewed ragged, the wendigo hunts during the coldest time of the year to satisfy its insatiable hunger. Each life it claims only makes its hunger grow.",
         "attack_points": 700,
         "defense_points": 500,
-        "image": "windigo.jpeg"
+        "image": "windigo.png"
       },
       {
         "name": "Mapinguari",
@@ -189,7 +189,7 @@
         "description": "The blood sucking chupacabra prefers goats, but it has been known to feed on nearly anything. Appearing either reptilian with red eyes and spikes or as a hairless canine, they terrorize cities and farms alike.",
         "attack_points": 450,
         "defense_points": 300,
-        "image": "chupacabra.jpeg"
+        "image": "chupacabra.png"
       },
       {
         "name": "Kaupe",
