@@ -105,12 +105,7 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
                 </div>
             </ReactCardFlip>
             </div>
-            
-            {/* add card to deck to use it to play */}
-            {/* <Button variant="secondary" className="add-button" onClick={() => addToDeck({ id, category, name, image, description, attack_points, defense_points }, exceedLimit, setExceedLimit)}>Add to deck</Button> */}
             <Button variant="secondary" className="add-button" onClick={() => addToDeck({ id, category, name, image, description, attack_points, defense_points })}>Add to deck</Button>
-
-
         </div>
     );
     
@@ -164,7 +159,7 @@ function CreateDeck() {
     }, []);
 
     const navigate = useNavigate();
-    
+
     const handleBeginClick = () => {
         console.log(selectedCards);
        navigate("/game", { state: { selectedCards: selectedCards } });
