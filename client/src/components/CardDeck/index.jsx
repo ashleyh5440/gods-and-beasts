@@ -27,40 +27,51 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
     backgroundPosition: "center",
   };
 
+  const lastActionRef = useRef(null);
+  
   useEffect(() => {
-    setDeck(selectedCards.map(() => ({ isFlipped: false }))); // Reset deck when selectedCards change
-  }, [selectedCards]);
+    cardRefs.current.forEach((card, index) => {
+      gsap.set(card, { zIndex: deck.length - index });
+      let prevPosition = `${(index + 1) * 5}`;
+      if (lastActionRef.current === "right") {
+        gsap.to(
+          card,
 
-  useEffect(() => {
-    if (cardRefs.current.length > 0) {
-      // Initialize Draggable for each card
-      cardRefs.current.forEach((card, index) => {
-        Draggable.create(card, {
-          type: "x",
-          bounds: { minX: -200, maxX: 200 },
-          edgeResistance: 0.75,
-          onDragEnd: function () {
-            console.log("drag end")
-            if (Math.abs(this.x) >= 50) {
-              animateBackOfDeck(this.target, card, index);
-            } else {
-                // animateFrontOfDeck(this.target, card, index);
-              gsap.to(this.target, { x: 0 });
-            }
+          { rotation: `${index * 1}deg`, duration: 0.25 }
+        );
+      } else {
+        gsap.fromTo(
+          card,
+          { rotation: prevPosition },
+          { rotation: `${index * 1}deg`, duration: 0.25 }
+        );
+      }
+
+      Draggable.create(card, {
+        type: "x",
+        bounds: { minX: -50, maxX: 50 },
+        edgeResistance: 0.75,
+        onDragEnd: function () {
+          lastActionRef.current = "left";
+          if (Math.abs(this.x) >= 50) {
+            gsap.set(this.target, { zIndex: 0 });
+            animateToBackOfDeck(this.target, card, index);
+          } else {
+            gsap.to(this.target, { x: 0 });
           }
-        });
+        }
       });
-    }
-  }, [cardRefs.current]); // Run effect when cardRefs change
+    });
+  }, [deck]);
 
-  const animateBackOfDeck = (target, card, index) => {
+  const animateToBackOfDeck = (target, card, index) => {
     gsap.to(target, {
         x: 0,
         y: 0,
-        // scale: 0.9,
+        scale: 0.9,
         zIndex: 0,
-        // rotation: (cardRefs.current.length - 1) * 5,
-        // duration: 0.35,
+        rotation: (cardRefs.current.length - 1) * 2,
+        duration: 0.35,
         onComplete: function () {
             console.log("see me?")
           gsap.set(card, { scale: 1 });
@@ -76,7 +87,7 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
     });
   };
 
-  const animateFrontOfDeck = (target, card, index) => {
+  const animateToFrontOfDeck = (target, card, index) => {
     gsap.set(target, { zIndex: cardRefs.current.length + 1 });
 
     gsap.fromTo(
