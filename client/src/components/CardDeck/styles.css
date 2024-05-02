@@ -1,4 +1,4 @@
-.card {
+.selected-card {
     width: 200px;
     height: 280px;
 }
@@ -21,9 +21,11 @@
     border: 2px solid blue;
 }
 
-#carddeck-container {
-    width: 30%;
-    margin-left: 15%;
-    border: 2px solid green;
+.card-deck-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15%;
 } 
 
