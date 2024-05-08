@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 gsap.registerPlugin(Draggable);
 
 const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, category }, ref) => {
-  const [deck, setDeck] = useState(selectedCards.map(() => ({ isFlipped: false })));
+  const [deck, setDeck] = useState(selectedCards.map((card, index) =>({ ...card, id: index})));
   const cardRefs = useRef([]);
 
   const getBackgroundImage = (category) => {
@@ -36,7 +36,6 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
       if (lastActionRef.current === "right") {
         gsap.to(
           card,
-
           { rotation: `${index * 1}deg`, duration: 0.25 }
         );
       } else {
@@ -52,29 +51,30 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
         bounds: { minX: -50, maxX: 50 },
         edgeResistance: 0.75,
         onDragEnd: function () {
-          lastActionRef.current = "left";
+          lastActionRef.current = "right";
           if (Math.abs(this.x) >= 50) {
-            gsap.set(this.target, { zIndex: 0 });
-            animateToBackOfDeck(this.target, card, index);
+            gsap.set(this.target, { zIndex: 0 }); //sends card to the back of the deck
+            animateBackDeck(this.target, card, index);
+            animateFrontOfDeck(this.target, card, index);
           } else {
             gsap.to(this.target, { x: 0 });
           }
         }
       });
     });
-  }, [deck]);
+    console.log(selectedCards)
+  }, []);
 
-  const animateToBackOfDeck = (target, card, index) => {
+  const animateBackDeck = (target, card, index) => {
     gsap.to(target, {
         x: 0,
         y: 0,
         scale: 0.9,
         zIndex: 0,
         rotation: (cardRefs.current.length - 1) * 2,
-        duration: 0.35,
+        // duration: 0.35,
         onComplete: function () {
-            console.log("see me?")
-          gsap.set(card, { scale: 1 });
+          gsap.set(target);
           const newDeck = [...deck];
           const newDeckRef = [...cardRefs.current];
           const [removed] = newDeck.splice(index, 1);
@@ -87,7 +87,7 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
     });
   };
 
-  const animateToFrontOfDeck = (target, card, index) => {
+  const animateFrontOfDeck = (target, card, index) => {
     gsap.set(target, { zIndex: cardRefs.current.length + 1 });
 
     gsap.fromTo(
@@ -99,7 +99,7 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
         scale: 1,
         rotate: 0,
         onComplete: function () {
-          gsap.set(card, { scale: 1 });
+          gsap.set(card);
           const newDeck = [...deck];
           const newDeckRef = [...cardRefs.current];
           const [removed] = newDeck.splice(index, 1);
@@ -111,6 +111,7 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
         }
       }
     );
+    console.log("see me?", card)
   };
 
   const handleDeckClick = (index) => {
@@ -136,7 +137,6 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
             <div className="card-img">
               <img src={`/images/${selectedCards[index].image}`} alt={selectedCards[index].name} />
             </div>
-            {/* Render additional content if needed */}
           </div>
         </div>
       ))}

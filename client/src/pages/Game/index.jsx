@@ -4,6 +4,10 @@ import { QUERY_CHARACTERS } from "../../utils/queries";
 
 import CardDeck from '../../components/CardDeck';
 // import CardDeck from '../../components/CardDeck/CardDeck.jsx';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import '../Game/styles.css';
 
 function Game() {
@@ -154,22 +158,6 @@ function Game() {
                         
                     <div className="user-deck">
                         <h3>Your Deck</h3>
-                        {/* <div className="card-row">
-                            {selectedCards.map((card, index) => (
-                            <div className={`col-md-${12 / location.state.selectedCards.length}`} key={index}>
-                                <div className={`card ${card.category}`} style={gameCardStyle(card.category)}>
-                                    <div className="card-content">
-                                        <div className="name-category">
-                                            <h4>{card.name}</h4>
-                                        </div>
-                                        <div className="card-img">
-                                            <img src={`/images/${card.image}`} alt={card.name} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            ))}
-                        </div> */}
                         <CardDeck ref={cardRefs} selectedCards={selectedCards} />
                     </div>
                 </div>
