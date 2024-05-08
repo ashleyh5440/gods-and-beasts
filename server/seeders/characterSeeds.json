@@ -277,7 +277,7 @@
         "description": "Often found skulking around graveyards and burial grounds, ghouls consume human flesh. They are able to change their shape, often into the person most recently eaten, but they can never change the hooves on their feet.",
         "attack_points": 600,
         "defense_points": 550,
-        "image": "ghoul.jpg"
+        "image": "ghoul.png"
       },
       {
         "name": "Falak",

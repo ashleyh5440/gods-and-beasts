@@ -35,6 +35,7 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
 
     const [isFlipped, setIsFlipped] = useState(false);
 
+    //event handler for flipping cards
     const handleClick = (e) => {
         e.preventDefault();
         setIsFlipped(!isFlipped);
