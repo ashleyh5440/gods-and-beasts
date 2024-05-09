@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation,  } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 
 import CardDeck from '../../components/CardDeck';
 // import CardDeck from '../../components/CardDeck/CardDeck.jsx';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import cardBack from '../../../public/card-back.png';
+import Button from 'react-bootstrap/Button';
 import '../Game/styles.css';
 
 function Game() {
@@ -27,17 +27,17 @@ function Game() {
         };
     };
 
-    useEffect(() => {
-        if (location.state && location.state.selectedCards) {
-            console.log("Selected cards updated in Game component:", location.state.selectedCards);
-        } else {
-            console.log("There's a problem with location state:", location.state);
-        }
-    }, [location.state]);
+    // useEffect(() => {
+    //     if (location.state && location.state.selectedCards) {
+    //         console.log("Selected cards updated in Game component:", location.state.selectedCards);
+    //     } else {
+    //         console.log("There's a problem with location state:", location.state);
+    //     }
+    // }, [location.state]);
 
-    useEffect(() => {
-        console.log("location state:", location.state);
-    }, [location.state]);
+    // useEffect(() => {
+    //     console.log("location state:", location.state);
+    // }, [location.state]);
 
 
     //game logic
@@ -57,6 +57,20 @@ function Game() {
     const userCardRef = useRef();
     const opponentCardRef = useRef();
 
+    //computer draws a random card, limit is 10 choices
+      const getNewOpponentCard = async () => {
+        const { loading, error, data } = useQuery(QUERY_CHARACTERS, {
+            variables: { limit: 10 }
+        });
+
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>Error: {error.message}</p>;
+
+        const characters = data.getCharacters || [];
+        console.log("computer cards:", characters);
+        return characters;
+    }
+
     //define attack and defend
     //user has to choose before the computer
     const attack = async() => {
@@ -70,7 +84,7 @@ function Game() {
 
 
     //remove/disable user's selected card
-        //cards are in a carousel, clicking on one makes attack/defend options appear
+        //cards are in a deck, clicking on one makes attack/defend options appear
     function userSelection() {
         //when user chooses a card, something happens(color change, noise, disappears?) to indicate that it has been selected, attack/defend buttons appear. add back button to un-select it?
     }
@@ -133,16 +147,6 @@ function Game() {
         
     }
 
-    //get opponent card, randomly pulled from database
-    const getNewOpponentCard = async () => {
-        const { loading, error, data } = useQuery(QUERY_CHARACTERS);
-
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error: {error.message}</p>;
-
-        const characters = data.getCharacters || [];
-    }
-
     //choice handlers
 
     //compare points
@@ -153,12 +157,17 @@ function Game() {
             <div className="game-page-container">
                 <div className="decks">
                     <div className="opponent-deck">
-                        Opponent's Deck
+                        <img src={cardBack} style={{ width: "200px", height: "280px"}}/>
                     </div>
                         
                     <div className="user-deck">
                         <h3>Your Deck</h3>
                         <CardDeck ref={cardRefs} selectedCards={selectedCards} />
+                        <div className="user-card-info">
+                            <p>Attack Points:</p>
+                            <p>Defense Points: </p>
+                        </div>
+                        <Button variant="primary">Play Card</Button>
                     </div>
                 </div>
                 <div className="arena">
