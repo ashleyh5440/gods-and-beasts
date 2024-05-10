@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 import { NavLink, useNavigate } from 'react-router-dom';
-import Draggable from 'gsap/Draggable';
+import Draggable from 'gsap/Draggable'; 
 
 import Cards from '../../components/CardDeck';
 import CardDeck from '../../components/CardDeck/CardDeck.jsx';

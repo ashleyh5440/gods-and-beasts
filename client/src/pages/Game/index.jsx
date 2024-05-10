@@ -10,6 +10,31 @@ import cardBack from '../../../public/card-back.png';
 import Button from 'react-bootstrap/Button';
 import '../Game/styles.css';
 
+// const getNewOpponentCard = () => {
+//     const [opponentCard, setOpponentCard] = useState(null);
+
+//     useEffect(() => {
+//         const fetchOpponentCard = async () => {
+//             try {
+//                 const { data } = await useQuery(QUERY_CHARACTERS, {
+//                     variables: { limit: 10 }
+//                 });
+//                 const characters = data.getCharacters || [];
+//                 const randomIndex = Math.floor(Math.random() * characters.length);
+//                 const randomOpponentCard = characters[randomIndex];
+//                 setOpponentCard(randomOpponentCard)
+//                 console.log("computer cards:", characters);
+//             } catch (error) {
+//                 console.error("error getting opponent card:", error)
+//             }
+//         };
+
+//         fetchOpponentCard();
+
+//     }, []);
+//     return opponentCard;
+// }
+
 function Game() {
 
     //getting cards from CreateDeck
@@ -27,21 +52,6 @@ function Game() {
         };
     };
 
-    // useEffect(() => {
-    //     if (location.state && location.state.selectedCards) {
-    //         console.log("Selected cards updated in Game component:", location.state.selectedCards);
-    //     } else {
-    //         console.log("There's a problem with location state:", location.state);
-    //     }
-    // }, [location.state]);
-
-    // useEffect(() => {
-    //     console.log("location state:", location.state);
-    // }, [location.state]);
-
-
-    //game logic
-
     const [numCards, setNumCards] = useState(10);
     const [wins, setWins] = useState();
     const [losses, setLosses] = useState();
@@ -56,37 +66,39 @@ function Game() {
     
     const userCardRef = useRef();
     const opponentCardRef = useRef();
+    
+    const { loading, error, data } = useQuery(QUERY_CHARACTERS, {
+        variables: { limit: 10 }
+    });
 
-    //computer draws a random card, limit is 10 choices
-      const getNewOpponentCard = async () => {
-        const { loading, error, data } = useQuery(QUERY_CHARACTERS, {
-            variables: { limit: 10 }
-        });
-
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error: {error.message}</p>;
-
-        const characters = data.getCharacters || [];
-        console.log("computer cards:", characters);
-        return characters;
-    }
+    useEffect(() => {
+        if (data) {
+            const characters = data.getCharacters || [];
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            const randomOpponentCard = characters[randomIndex];
+            setOpponentCard(randomOpponentCard);
+            console.log("computer cards:", characters)
+        }
+        if (error) {
+            console.error("error getting opponent card:", error);
+        }
+    }, [data, error]);
 
     //define attack and defend
     //user has to choose before the computer
     const attack = async() => {
-        await getNewOpponentCard()
         playUserCard("attack")
     } 
     const defend = async() => {
-        await getNewOpponentCard()
         playUserCard("attack")
     } 
 
+    
 
     //remove/disable user's selected card
         //cards are in a deck, clicking on one makes attack/defend options appear
     function userSelection() {
-        //when user chooses a card, something happens(color change, noise, disappears?) to indicate that it has been selected, attack/defend buttons appear. add back button to un-select it?
+        //when user chooses a card, something happens(color change, noise, disappears?) to indicate that it has been selected, attack/defend buttons appear add back button to un-select it?
     }
 
     const playUserCard = (userSelection) => {
@@ -167,12 +179,26 @@ function Game() {
                             <p>Attack Points:</p>
                             <p>Defense Points: </p>
                         </div>
-                        <Button variant="primary">Play Card</Button>
+                        <Button variant="primary" style={{margin: "2% 17%"}}>Attack</Button>
+                        <Button variant="primary" style={{margin: "2% 17%"}}>Defend</Button>
                     </div>
                 </div>
                 <div className="arena">
                     <div className="battleground">
-                        <div className="opponent-card"></div>
+                        <div className="opponent-card">
+                            {opponentCard && (
+                                <div className={`card ${opponentCard.category}`} style={gameCardStyle (opponentCard.category)}>
+                                    <div className="card-content">
+                                        <div className="name-category">
+                                            <h3>{opponentCard.name}</h3>
+                                        </div>
+                                        <div className="card-img">
+                                            <img src={`/images/${opponentCard.image}`} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                         <div className="user-card"></div>
                     </div>
                 </div>
