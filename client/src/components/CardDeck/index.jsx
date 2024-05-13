@@ -36,13 +36,14 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
       if (lastActionRef.current === "right") {
         gsap.to(
           card,
-          { rotation: `${index * 1}deg`, duration: 0.25 }
+          // { rotation: `${index * 1}deg`, duration: 0.25 }
+          { rotation: `${index * 1}deg`}
         );
       } else {
         gsap.fromTo(
           card,
           { rotation: prevPosition },
-          { rotation: `${index * 1}deg`, duration: 0.25 }
+          { rotation: `${index * 1}deg`}
         );
       }
 
@@ -66,6 +67,11 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
   }, []);
 
   const animateBackDeck = (target, card, index) => {
+    console.log("animating back deck:", target, card, index);
+    if (!target || !cardRefs.current[index]) {
+      console.log("something wrong at index", index);
+      return;
+    }
     gsap.to(target, {
         x: 0,
         y: 0,
@@ -74,20 +80,38 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
         rotation: (cardRefs.current.length - 1) * 2,
         // duration: 0.35,
         onComplete: function () {
+          console.log("back complete")
           gsap.set(target);
-          const newDeck = [...deck];
-          const newDeckRef = [...cardRefs.current];
-          const [removed] = newDeck.splice(index, 1);
-          const [removedRef] = newDeckRef.splice(index, 1);
-          newDeck.push(removed);
-          newDeckRef.push(removedRef);
-          cardRefs.current = newDeckRef;
-          setDeck(newDeck);
+          setDeck((prevDeck) => {
+            const newDeck = [...prevDeck];
+            const [removed] = newDeck.splice(index, 1);
+            newDeck.push(removed);
+            return newDeck;
+          });
+          cardRefs.current[index] = cardRefs.current[deck.length - 1]; 
+          // cardRefs.current = cardRefs.current.map((ref, i) =>
+          //   i === index ? cardRefs.current[deck.length - 1]: ref
+          // )
+
+          // const newDeck = [...deck];
+          // const newDeckRef = [...cardRefs.current];
+          // const [removed] = newDeck.splice(index, 1);
+          // const [removedRef] = newDeckRef.splice(index, 1);
+          // newDeck.push(removed);
+          // newDeckRef.push(removedRef);
+          // cardRefs.current = newDeckRef;
+          // setDeck(newDeck);
       }
     });
   };
 
   const animateFrontOfDeck = (target, card, index) => {
+    console.log("animating front deck:", target, card, index);
+    if (!target || !cardRefs.current[index]) {
+      console.log("something wrong at index", index);
+      return;
+    }
+
     gsap.set(target, { zIndex: cardRefs.current.length + 1 });
 
     gsap.fromTo(
@@ -98,16 +122,28 @@ const CardDeck = forwardRef(({ currentIndex, selectedCards, exceedLimit, categor
         y: 0,
         scale: 1,
         rotate: 0,
+        // duration: 0.35,
         onComplete: function () {
-          gsap.set(card);
-          const newDeck = [...deck];
-          const newDeckRef = [...cardRefs.current];
-          const [removed] = newDeck.splice(index, 1);
-          const [removedRef] = newDeckRef.splice(index, 1);
-          newDeck.unshift(removed);
-          newDeckRef.unshift(removedRef);
-          cardRefs.current = newDeckRef;
-          setDeck(newDeck);
+          gsap.set(target);
+          setDeck((prevDeck) => {
+            const newDeck = [...prevDeck];
+            const [removed] = newDeck.splice(index, 1);
+            newDeck.unshift(removed);
+            return newDeck;
+          });
+          cardRefs.current[index] = cardRefs.current[0]; 
+          // cardRefs.current = cardRefs.current.map((ref, i) =>
+          //   i === index ? cardRefs.current[deck.length - 1]: ref
+          // )
+
+          // const newDeck = [...deck];
+          // const newDeckRef = [...cardRefs.current];
+          // const [removed] = newDeck.splice(index, 1);
+          // const [removedRef] = newDeckRef.splice(index, 1);
+          // newDeck.unshift(removed);
+          // newDeckRef.unshift(removedRef);
+          // cardRefs.current = newDeckRef;
+          // setDeck(newDeck);
         }
       }
     );

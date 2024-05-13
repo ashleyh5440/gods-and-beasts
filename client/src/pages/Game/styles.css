@@ -29,15 +29,44 @@
 .opponent-deck, .user-deck {
     width: 100%;
     margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 2px solid white;
 }
 
-.user-card-info {
-    display: flex;
+.carousel-buttons-container {
+    display: flex; 
     flex-direction: row;
-    justify-content: space-around;
-    margin-top: 315px;
-    border: 2px solid black;
+    justify-content: space-between;
+    margin-top: 30%;
+}
+
+.carousel-buttons-container button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.327);
+}
+
+.carousel-inner {
+    border: 5px solid yellow;
+}
+
+.carousel-item {
+    width: 220px;
+    margin-left: 23%;
+}
+
+.card {
+    background-size: 100% 100%;
+}
+
+
+.user-card-info {
+    width: 80%;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-around; */
+    /* margin-top: 315px; */
 }
 
 .arena {
