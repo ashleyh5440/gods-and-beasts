@@ -47,11 +47,11 @@
     background-color: rgba(0, 0, 0, 0.327);
 }
 
-.carousel-inner {
+.user-deck-carousel .carousel-inner {
     border: 5px solid yellow;
 }
 
-.carousel-item {
+.user-deck-carousel .carousel-item {
     width: 220px;
     margin-left: 23%;
 }
