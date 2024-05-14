@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
 import { useLocation,  } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
@@ -51,7 +52,7 @@ function Game() {
     const [userAttack, setUserAttack] = useState(0);
     const [userDefend, setUserDefend] = useState(0);
     const [userCard, setUserCard] = useState();
-    const [moveUserCard, setMoveUserCard] = useState();
+    // const [moveUserCard, setMoveUserCard] = useState();
     const [selectedAttackPoints, setSelectedAttackPoints] = useState();
     const [selectedDefensePoints, setSelectedDefensePoints] = useState();
 
@@ -61,7 +62,8 @@ function Game() {
     const [opponentCard, setOpponentCard] = useState();
     const [showOpponentCard, setShowOpponentCard] = useState(false);
     
-    const userCardRef = useRef();
+    const userCardRef = useRef(null);
+    const selectedCardRef = useRef(null);
     const opponentCardRef = useRef();
 
     const carouselIndex = (selectedIndex, e) => {
@@ -104,11 +106,27 @@ function Game() {
         }
     }, [selectedCards]);
 
+    const moveUserCard = () => {
+        const userCardInitPosition = selectedCardRef.current.getBoundingClientReact(); 
+        const userCardPlayPosition = userCardRef.current.getBoundingClientReact();
+
+        const moveX = userCardPlayPosition.left - userCardInitPosition.left;
+        const moveY = userCardPlayPosition.top - userCardInitPosition.top;
+
+        gsap.to(selectedCardRef.current, {
+            duration: 0.5,
+            x: moveX,
+            y: moveY,
+            onComplete: () => {
+                
+            }
+        })
+    }
     //define attack and defend
     //user has to choose before the computer
     const attack = async() => {
         //move card to the center
-        setMoveUserCard(userCardRef.current);
+        moveUserCard();
 
         //reveal the computer's card 
         setShowOpponentCard(true);
@@ -119,7 +137,7 @@ function Game() {
         // playUserCard("attack")
 
     } 
-    
+
     const defend = async() => {
         playUserCard("attack")
     } 
@@ -183,7 +201,6 @@ function Game() {
 
     }
 
-
     return (
         <section className="game-page">
             <div className="game-page-container">
@@ -204,10 +221,10 @@ function Game() {
                     </div> */}
 
                     <div className="user-deck">
-                        <Carousel ref={carouselRef} onSelect={carouselIndex}>
+                        <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
                             {selectedCards.map((card, index) => (
                             <Carousel.Item key={index}>
-                                <div className={`card ${card.category}`} style={{ backgroundImage: gameCardStyle(card.category).backgroundImage }}>
+                                <div className={`card ${card.category}`} style={{ backgroundImage: gameCardStyle(card.category).backgroundImage }} ref={selectedCardRef}>
                                     <div className="card-content">
                                         <div className="name-category">
                                             <h3>{card.name}</h3>
@@ -243,9 +260,6 @@ function Game() {
                     
                 </div>
                 <div className="arena">
-                    {moveUserCard && (
-                        <div className="user-card">{moveUserCard}</div>
-                    )}
                     <div className="battleground">
                         <div className="opponent-card">
                             {showOpponentCard ? (
