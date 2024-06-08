@@ -22,8 +22,15 @@ function Game() {
     const location = useLocation();
     const initialSelectedCards = location.state ? location.state.selectedCards : [];
     const [selectedCards, setSelectedCards] = useState(initialSelectedCards); // set selectedCards to state
+    const [userDeck, setUserDeck] = useState(initialSelectedCards);
+    const [deckCount, setDeckCount] = useState(initialSelectedCards.length); //keep track of the number of cards in user's deck
     const cardRefs = useRef([]);
     const carouselRef = useRef();
+
+    useEffect(() => {
+        console.log("remaining user cards", userDeck);
+        console.log("deck count", deckCount);
+    }, [userDeck, deckCount]);
 
     const gameCardStyle = (category) => {
         return {
@@ -53,16 +60,12 @@ function Game() {
     const [userAttack, setUserAttack] = useState(0);
     const [userDefend, setUserDefend] = useState(0);
     const [userCard, setUserCard] = useState();
-    // const [moveUserCard, setMoveUserCard] = useState();
 
     //showing the points for the cards in user's deck at current index in carousel
     const [selectedAttackPoints, setSelectedAttackPoints] = useState();
     const [selectedDefensePoints, setSelectedDefensePoints] = useState();
 
     const [opponentLifePoints, setOpponentLifePoints] = useState(10000);
-    const [opponentAttack, setOpponentAttack] = useState();
-    const [opponentDefend, setOpponentDefend] = useState();
-    const [randomOpponentCard, setRandomOpponentCard] = useState(null);
     const [opponentCard, setOpponentCard] = useState();
     const [showOpponentCard, setShowOpponentCard] = useState(false);
     
@@ -78,7 +81,6 @@ function Game() {
         setUserCardIndex(selectedIndex)
         const userCardEl = selectedCards[selectedIndex];
         console.log("index:", selectedIndex, userCardEl, "userCardIndex:", userCardIndex);
-        console.log("setUserCardIndex", setUserCardIndex)
         if (userCardEl) {
             setSelectedAttackPoints(userCardEl.attack_points || 0)
             setSelectedDefensePoints(userCardEl.defense_points || 0)
@@ -86,26 +88,62 @@ function Game() {
             setUserDefend(userCardEl.defense_points || 0)
         }
     }
+
+    // remove card from the user deck once played
+    const updateDeck = (index) => {
+        const newDeck = selectedCards.filter((_, i) => i !== index);
+        setSelectedCards(newDeck);
+        setDeckCount(newDeck.length);
+        setUserDeck(newDeck);
+
+        if (newDeck.length > 0) {
+            setUserCardIndex(0)
+            const firstCard = newDeck[0]
+            setSelectedAttackPoints(firstCard.attack_points || 0);
+            setSelectedDefensePoints(firstCard.defense_points || 0)
+        }
+    }; 
     
     //computer pulls cards from the database to use to play
     const { loading, error, data } = useQuery(QUERY_CHARACTERS, {
         variables: { limit: 10 }
     });
 
+    const fetchOpponentCard = (characters) => {
+        if (characters && characters.length > 0) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            const randomCard = characters[randomIndex];
+            setOpponentCard(randomCard);
+            // setShowOpponentCard(true);
+             console.log("computer card", randomCard)
+        }
+    };
+
     useEffect(() => {
         if (data) {
             const characters = data.getCharacters || [];
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            // const randomOpponentCard = characters[randomIndex];
-            const randomCard = characters[randomIndex];
-            setOpponentCard(randomCard);
-            console.log("computer choices:", characters)
-            console.log("computer card", randomCard)
+            fetchOpponentCard(characters);
+            // console.log("computer choices:", characters)
         }
         if (error) {
-            console.error("error getting opponent card:", error);
+            console.error("error getting opponent card:", error)
         }
     }, [data, error]);
+
+    // useEffect(() => {
+    //     if (data) {
+    //         const characters = data.getCharacters || [];
+    //         const randomIndex = Math.floor(Math.random() * characters.length);
+    //         // const randomOpponentCard  = characters[randomIndex];
+    //         const randomCard = characters[randomIndex];
+    //         setOpponentCard(randomCard);
+    //         console.log("computer choices:", characters)
+    //         console.log("computer card", randomCard)
+    //     }
+    //     if (error) {
+    //         console.error("error getting opponent card:", error);
+    //     }
+    // }, [data, error]);
 
     //show the points for the card currently showing in the user deck
     useEffect(() => {
@@ -164,10 +202,12 @@ function Game() {
         setUserCard(userCard)
         console.log("user's card:", userCard)
 
-        const updateDeck = selectedCards.map((card, index) => 
-            index === userCardIndex ? { ...card, hidden: true } : card
-        );
-        setSelectedCards(updateDeck);
+        setUserCardIndex(0)
+
+      //update user deck
+      updateDeck(userCardIndex);
+      console.log("remaining user cards", userDeck)
+      console.log("deck count", deckCount)
         
         //reveal the computer's card 
         setShowOpponentCard(true);
@@ -177,7 +217,6 @@ function Game() {
 
         //run game logic
         playUserCard('attack');
-
     } 
 
     //runs when user clicks defend button
@@ -188,11 +227,6 @@ function Game() {
         const userCard = selectedCards[userCardIndex]
         setUserCard(userCard)
         console.log("user's card:", userCard)
-
-        const updateDeck = selectedCards.map((card, index) => 
-            index === userCardIndex ? { ...card, hidden: true } : card
-        );
-        setSelectedCards(updateDeck);
         
         //reveal the computer's card 
         setShowOpponentCard(true);
@@ -203,6 +237,19 @@ function Game() {
         //run game logic
         playUserCard('defend');
     } 
+
+    //clear the arena and get new fetch for opponent card
+    const clearArena = () => {
+        setTimeout(() => {
+            setShowOpponentCard(false);
+            // setShowUserCard(false);
+            setUserCard(null);
+            if (data && !error) {
+                const characters = data.getCharacters || [];
+                fetchOpponentCard(characters);
+            }
+        }, 15000)
+    }
 
     //game logic
     const playUserCard = (userSelection) => {
@@ -239,7 +286,6 @@ function Game() {
                     setUserLifePoints((prev) => prev - (opponentAttack || 0));
                     console.log("you lose :(")
                 }
-                console.log("user life points:", setUserLifePoints, "opponent life points:", setOpponentLifePoints)
 
                     //opponent defends
                     //if attacker loses, half of the attack points from that card are taken from their total life points; if defender loses, the card’s defense points are subtracted from their total life points
@@ -277,9 +323,19 @@ function Game() {
             } else if (opponentSelection === 'opDefend') {
                 setTies((prev) => prev + 1);
             }
-            console.log("user life points:", setUserLifePoints, "opponent life points:", setOpponentLifePoints)
         }
         //clear cards from arena to start again
+        clearArena();
+        
+        if ((selectedCards === 0) || (userLifePoints === 0) || (opponentLifePoints === 0)){
+            if (wins > losses || userLifePoints > opponentLifePoints){
+                console.log("Enemies defeated; you won the game!")
+            } else if (wins === losses || userLifePoints === opponentLifePoints) {
+                console.log("No winners; it's a tie")
+            } else {
+                console.log("You were slaughtered. Be ashamed")
+            }
+        }
     }
 
     return (
@@ -305,7 +361,9 @@ function Game() {
                     <div className="user-deck">
                         <p>Life points: {userLifePoints}</p>
                         <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
-                            {selectedCards.map((card, index) => (
+                            {/* {selectedCards.map((card, index) => ( */}
+
+                        {userDeck.map((card, index) => (
                             <Carousel.Item key={index}>
                                 <div className={`card ${card.category}`} style={{ backgroundImage: gameCardStyle(card.category).backgroundImage }} ref={selectedCardRef}>
                                     <div className="card-content">
