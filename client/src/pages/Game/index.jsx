@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { useLocation,  } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
@@ -53,26 +54,36 @@ function Game() {
     const [userDefend, setUserDefend] = useState(0);
     const [userCard, setUserCard] = useState();
     // const [moveUserCard, setMoveUserCard] = useState();
+
+    //showing the points for the cards in user's deck at current index in carousel
     const [selectedAttackPoints, setSelectedAttackPoints] = useState();
     const [selectedDefensePoints, setSelectedDefensePoints] = useState();
 
     const [opponentLifePoints, setOpponentLifePoints] = useState(10000);
     const [opponentAttack, setOpponentAttack] = useState();
     const [opponentDefend, setOpponentDefend] = useState();
+    const [randomOpponentCard, setRandomOpponentCard] = useState(null);
     const [opponentCard, setOpponentCard] = useState();
     const [showOpponentCard, setShowOpponentCard] = useState(false);
     
     const userCardRef = useRef(null);
-    const selectedCardRef = useRef(null);
+    // const selectedCardRef = useRef(null);
+    const selectedCardRef = useRef([]);
     const opponentCardRef = useRef();
 
-    const carouselIndex = (selectedIndex, e) => {
-        const selectedCard = selectedCards[selectedIndex]
-        console.log("index:", selectedIndex, selectedCard);
+        //userCardIndex = the order of cards in the carousel
+    let [userCardIndex, setUserCardIndex] = useState(0);
 
-        if (selectedCard) {
-            setSelectedAttackPoints(selectedCard.attack_points || 0)
-            setSelectedDefensePoints(selectedCard.defense_points || 0)
+    const carouselIndex = (selectedIndex, e) => {
+        setUserCardIndex(selectedIndex)
+        const userCardEl = selectedCards[selectedIndex];
+        console.log("index:", selectedIndex, userCardEl, "userCardIndex:", userCardIndex);
+        console.log("setUserCardIndex", setUserCardIndex)
+        if (userCardEl) {
+            setSelectedAttackPoints(userCardEl.attack_points || 0)
+            setSelectedDefensePoints(userCardEl.defense_points || 0)
+            setUserAttack(userCardEl.attack_points || 0)
+            setUserDefend(userCardEl.defense_points || 0)
         }
     }
     
@@ -85,9 +96,11 @@ function Game() {
         if (data) {
             const characters = data.getCharacters || [];
             const randomIndex = Math.floor(Math.random() * characters.length);
-            const randomOpponentCard = characters[randomIndex];
-            setOpponentCard(randomOpponentCard);
-            console.log("computer cards:", characters)
+            // const randomOpponentCard = characters[randomIndex];
+            const randomCard = characters[randomIndex];
+            setOpponentCard(randomCard);
+            console.log("computer choices:", characters)
+            console.log("computer card", randomCard)
         }
         if (error) {
             console.error("error getting opponent card:", error);
@@ -105,79 +118,143 @@ function Game() {
             setSelectedDefensePoints(0);
         }
     }, [selectedCards]);
+    
+    // const tl = useRef();
+    // gsap.config({ debug: true })
 
-    const moveUserCard = () => {
-        const userCardInitPosition = selectedCardRef.current.getBoundingClientReact(); 
-        const userCardPlayPosition = userCardRef.current.getBoundingClientReact();
+    // useGSAP(() => {
+    //     console.log("useGSAP hook triggering")
+    //     const moveUserCard = () => {
+    //         console.log("moveCard function called")
+    //         const selectedCardEl = selectedCardRef.current[carouselRef.current ? carouselRef.current.state?.selectedIndex: 0];
+    //         console.log("selectedCardEl:", selectedCardEl)
+    //    if(selectedCardEl && userCardRef.current) {
+    //         const userCardInitPosition = selectedCardEl.getBoundingClientRect();
+    //         const userCardPlayPosition = userCardRef.current.getBoundingClientRect();
 
-        const moveX = userCardPlayPosition.left - userCardInitPosition.left;
-        const moveY = userCardPlayPosition.top - userCardInitPosition.top;
+    //         const moveX = userCardPlayPosition.left - userCardInitPosition.left;
+    //         const moveY = userCardPlayPosition.top - userCardInitPosition.top;
 
-        gsap.to(selectedCardRef.current, {
-            duration: 0.5,
-            x: moveX,
-            y: moveY,
-            onComplete: () => {
-                
-            }
-        })
-    }
-    //define attack and defend
-    //user has to choose before the computer
+    //         tl.current = gsap.timeline({ paused: true })
+    //         .to(selectedCardEl, {
+    //             x: moveX,
+    //             y: moveY,
+    //             duration: 1,
+    //         });
+    //         console.log("timeline", tl.current);
+    //         tl.current.play()
+    //     }
+    //     };
+    // }, { scope: selectedCardRef });
+
+    // const moveUserCard = () => {
+    //     if (tl.current) {
+    //         tl.current.reversed(!tl.current.reversed()).play();
+    //     }
+    //     console.log("see me? did i move?")
+    // }
+
+   {/* runs when user clicks attack button */} 
     const attack = async() => {
+        console.log("attack button clicked")
+        
         //move card to the center
-        moveUserCard();
+        const userCard = selectedCards[userCardIndex]
+        console.log("userCardIndex", userCardIndex)
+        setUserCard(userCard)
+        console.log("user's card:", userCard)
 
+        const updateDeck = selectedCards.map((card, index) => 
+            index === userCardIndex ? { ...card, hidden: true } : card
+        );
+        setSelectedCards(updateDeck);
+        
         //reveal the computer's card 
         setShowOpponentCard(true);
-        //computer chooses attack or defend
-        // const opponentSelection = Math.random() < 0.5 ? 'opAttack' : 'opDefend';
 
-        //compare points
-        // playUserCard("attack")
+        setUserAttack(userCard.attack_points || 0)
+        setUserDefend(userCard.defense_points || 0)
+
+        //run game logic
+        playUserCard('attack');
 
     } 
 
+    //runs when user clicks defend button
     const defend = async() => {
-        playUserCard("attack")
+        console.log("defend button clicked")
+
+        //move card to the center
+        const userCard = selectedCards[userCardIndex]
+        setUserCard(userCard)
+        console.log("user's card:", userCard)
+
+        const updateDeck = selectedCards.map((card, index) => 
+            index === userCardIndex ? { ...card, hidden: true } : card
+        );
+        setSelectedCards(updateDeck);
+        
+        //reveal the computer's card 
+        setShowOpponentCard(true);
+
+        setUserAttack(userCard.attack_points || 0)
+        setUserDefend(userCard.defense_points || 0)
+
+        //run game logic
+        playUserCard('defend');
     } 
 
-    //remove/disable user's selected card
-        //cards are in a deck, clicking on one makes attack/defend options appear
-    function userSelection() {
-        //when user chooses a card, something happens(color change, noise, disappears?) to indicate that it has been selected, attack/defend buttons appear add back button to un-select it?
-    }
-
+    //game logic
     const playUserCard = (userSelection) => {
-            //user attacks
+        console.log("game logic running", "userSelection:", userSelection);
+
+        const randomCard = opponentCard;
+        console.log("opponent card", randomCard);
+
+        const opponentAttack = randomCard.attack_points || 0;
+        const opponentDefend = randomCard.defense_points || 0;
+            
+        const opponentSelection = Math.random() > 0.5 ? 'opAttack' : 'opDefend'
+        console.log("opponentSelection:", opponentSelection)
+
+             //user attacks 
         if (userSelection === 'attack') {
-            console.log("attack points:", userAttack);
+            console.log("user attack points:", userAttack);
                 //opponent attacks
                 //card with the highest number of attack points wins and absorbs loser’s attack points into their life points
             if (opponentSelection === 'opAttack') {
+                console.log("opp attack points", opponentAttack)
                 if (userAttack > opponentAttack) {
                     setWins((prev) => prev + 1);
-                    setOpponentLifePoints ((prev) => prev - userAttack); //decrease opponent's life points by user's attack points
-                    setUserLifePoints ((prev) => prev + opponentAttack); //increase user's life points by opponent's attack points
+                    setOpponentLifePoints ((prev) => prev - (userAttack || 0)); //decrease opponent's life points by user's attack points
+                    setUserLifePoints ((prev) => prev + (opponentAttack || 0)); //increase user's life points by opponent's attack points
+                    console.log("you win!!")
                 } else if (userAttack === opponentAttack) {
                     setTies((prev) => prev + 1);
+                    console.log("it's a tie")
                     //do nothing
                 } else {
                     setLosses((prev) => prev + 1);
-                    setOpponentLifePoints ((prev) => prev + userAttack);
-                    setUserLifePoints((prev) => prev - opponentAttack);
+                    setOpponentLifePoints ((prev) => prev + (userAttack || 0));
+                    setUserLifePoints((prev) => prev - (opponentAttack || 0));
+                    console.log("you lose :(")
                 }
+                console.log("user life points:", setUserLifePoints, "opponent life points:", setOpponentLifePoints)
+
                     //opponent defends
                     //if attacker loses, half of the attack points from that card are taken from their total life points; if defender loses, the card’s defense points are subtracted from their total life points
             } else if (opponentSelection === 'opDefend') {
                 if (userAttack > opponentDefend) {
                     setWins((prev) => prev + 1);
-                    setOpponentLifePoints((prev) => prev - userAttack);
+                    setOpponentLifePoints((prev) => prev - (userAttack || 0));
+                    console.log("you win!!")
                 } else if (userAttack === opponentDefend) {
                     setTies((prev) => prev + 1);
+                    console.log("it's a tie")
                 } else {
                     setLosses((prev) => prev + 1);
-                    setUserLifePoints((prev) => prev - Math.floor(opponentAttack / 2));
+                    setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
+                    console.log("you lose :(")
                 }
             }
             //userDefends
@@ -186,19 +263,23 @@ function Game() {
             if (opponentSelection === 'opAttack') {
                 if (userDefend > opponentAttack) {
                     setWins((prev) => prev + 1);
-                    setUserLifePoints ((prev) => prev + opponentAttack);
+                    setUserLifePoints ((prev) => prev + (opponentAttack || 0));
+                    console.log("you win!!")
                 } else if (userDefend === opponentAttack) {
                     setTies((prev) => prev + 1);
+                    console.log("it's a tie")
                 } else {
                     setLosses((prev) => prev + 1);
-                    setUserLifePoints((prev) => prev - Math.floor(opponentAttack / 2));
+                    setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
+                    console.log("you lose :(")
                 }
                     //opponent defends
             } else if (opponentSelection === 'opDefend') {
                 setTies((prev) => prev + 1);
             }
+            console.log("user life points:", setUserLifePoints, "opponent life points:", setOpponentLifePoints)
         }
-
+        //clear cards from arena to start again
     }
 
     return (
@@ -206,9 +287,10 @@ function Game() {
             <div className="game-page-container">
                 <div className="decks">
                     <div className="opponent-deck">
+                        <p>Life points: {opponentLifePoints}</p>
                         <img src={cardBack} style={{ width: "200px", height: "280px"}}/>
                     </div>
-                        {/* deck anuimation, still working on fixing */}
+                        {/* deck animation, still working on fixing */}
                     {/* <div className="user-deck">
                         <h3>Your Deck</h3>
                         <CardDeck ref={cardRefs} selectedCards={selectedCards} />
@@ -221,6 +303,7 @@ function Game() {
                     </div> */}
 
                     <div className="user-deck">
+                        <p>Life points: {userLifePoints}</p>
                         <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
                             {selectedCards.map((card, index) => (
                             <Carousel.Item key={index}>
@@ -248,7 +331,7 @@ function Game() {
                             </Row>
                             <Row>
                                 <Col><Button variant="primary" style={{margin: "2% 17%"}} onClick={attack}>Attack</Button></Col>
-                                <Col><Button variant="primary" style={{margin: "2% 17%"}}>Defend</Button></Col>
+                                <Col><Button variant="primary" style={{margin: "2% 17%"}} onClick={defend}>Defend</Button></Col>
                             </Row>
                         </Container>
                         {/* <div className="user-card-info">
@@ -279,7 +362,20 @@ function Game() {
                                 <div></div>
                             )}
                         </div>
-                        <div className="user-card"></div>
+                        <div className="user-card">
+                            {userCard && (
+                                <div className={`card ${userCard.category}`} style={gameCardStyle(userCard.category)}>
+                                    <div className="card-content">
+                                        <div className="name-category">
+                                            <h3>{userCard.name}</h3>
+                                        </div>
+                                        <div className="card-img">
+                                            <img src={`/images/${userCard.image}`} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

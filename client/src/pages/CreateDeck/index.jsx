@@ -75,7 +75,7 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
 
     //card flips when clicked on
     return (
-        <div id={`card-${id}`}>
+        <div className="card-box" id={`card-${id}`}>
             <div ref={cardRef} draggable="true" 
             onDrag={handleDrag}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
@@ -210,7 +210,8 @@ function CreateDeck() {
         <section id="create-container">
             <div className="intro">
                 <h2>Build Your Army</h2>
-                <p>Choose ten cards to take into battle.</p>
+                <p>Choose ten cards to take into battle.<br />
+                Click on the card to flip it over.</p>
             </div>
             <div className="gods-container">
                 <h3>Gods</h3>
