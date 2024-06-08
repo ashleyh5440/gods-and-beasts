@@ -1,3 +1,14 @@
+h1 {
+    font-family: 'Italianno', cursive;
+    font-size: 60px;
+    color: white;
+}
+
+p, li {
+    color: white;
+    font-size: 20px;
+}
+
 .game-page {
     display: flex;
     flex-direction: column;
@@ -10,12 +21,19 @@
 
 }
 
+.rules-screen {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.546);
+    padding: 2%;
+}
+
 .game-page-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    width: 100vw;
     margin-top: 7%;
+    border: 5px solid green;
 }
 
 .decks {
@@ -103,6 +121,20 @@
 
 .hidden {
     display: none;
+}
+
+#begin-game-button {
+    padding: 5px 35px;
+    background-color: rgb(198, 152, 36);
+    border: none;
+    font-family: 'Italianno', cursive;
+    font-size: 40px;
+    color: white;
+    margin-top: 5%;
+}
+
+#begin-game-button:hover, #begin-game-button:active {
+    background-color: rgb(163, 124, 27) !important;
 }
 
 @media screen and (max-width: 768px) {
