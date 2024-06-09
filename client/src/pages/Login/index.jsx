@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './styles.css';
-// import 'animate.css';
+import 'animate.css';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -81,6 +81,10 @@ function LogIn(props) {
             <div className="signup-container">
                 <h1>Sign up</h1>
                 <Button variant="primary" className="button"><NavLink to="/signup">Sign up</NavLink></Button>
+            </div>
+            <div className="guest-container">
+              <h3><NavLink to="/createdeck">Continue as guest →</NavLink></h3>
+              <p>Your scores will be not be saved</p>
             </div>
         </section>
       

@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .home-page h1 {
     color: white;
     font-family: 'Italianno', cursive;
@@ -38,7 +42,6 @@ i:nth-child(3n + 3) {
 .home-page {
     margin: 0%;
     height: 100vh;
-    overflow: hidden !important;
 }
 
 .home-page-container {
@@ -51,14 +54,14 @@ i:nth-child(3n + 3) {
 
 .logo-container {
     width: 43%;
-    margin-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .home-button-container {
     width: 60%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    margin-top: 2%;
 }
 
 .home-button-container button {

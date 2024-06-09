@@ -1,3 +1,14 @@
+h1 {
+    font-family: 'Italianno', cursive;
+    font-size: 60px;
+    color: white;
+}
+
+p, li {
+    color: white;
+    font-size: 20px;
+}
+
 .game-page {
     display: flex;
     flex-direction: column;
@@ -6,40 +17,92 @@
     height: 100vh;
     background-image: url(../../../public/battleground.gif);
     background-repeat: no-repeat;
-    background-size: 100% 100vh;
+    background-attachment: fixed;
+    background-size: 100%;
 
 }
 
-.game-page-container {
+.rules-screen {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.546);
+    padding: 2%;
+}
+
+.game-screen{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 7%;
-}
-
-.decks {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 99vw;
+    margin-top: 5%;
     border: 2px solid red;
 }
 
-.opponent-deck, .user-deck {
+.row {
     width: 100%;
-    margin: 2%;
-    border: 2px solid white;
+    padding: 0% 0.8%;
 }
 
-.arena {
-    width: 57%;
-    height: 600px;
+.user-deck {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid blue;
+    border: 4px solid black;
+}
+
+.points-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 95%;
+}
+
+.points-box p {
+    color: white;
+    font-size: 15px;
+}
+
+.arena {
+    /* height: 600px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid green;
     
+}
+
+.carousel-buttons-container {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30%;
+}
+
+.carousel-buttons-container button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.327);
+}
+
+.user-deck-carousel .carousel-inner {
+    border: 5px solid yellow;
+}
+
+.user-deck-carousel .carousel-item {
+    width: 220px;
+    margin-left: 23%;
+}
+
+.card {
+    background-size: 100% 100%;
+
+}
+
+.user-card-info {
+    width: 80%;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-around; */
+    /* margin-top: 315px; */
 }
 
 .battleground {
@@ -49,20 +112,76 @@
     flex-direction: row;
     justify-content: space-around;
     margin-top: 8%;
-    border: 2px solid green;
 }
 
 .opponent-card {
     width: 200px;
     height: 280px;
-    border: 2px solid red;
 }
 
 .user-card {
     width: 200px;
     height: 280px;
-    border: 2px solid black;
 }
+
+.play-buttons button {
+    margin: "2% 17%";
+    background-color: rgb(198, 152, 36);
+    border: none;
+}
+
+.play-buttons button:hover, .play-buttons button:active {
+    background-color: rgb(163, 124, 27) !important;
+}
+
+.end-screen {
+    background-color: rgba(0, 0, 0, 0.475);
+    width: 100vw;
+    height: 100vh;
+}
+
+.end-buttons {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.end-buttons button {
+    width: 150px;
+    background-color: rgb(198, 152, 36);
+    border: none;
+    font-family: 'Italianno', cursive;
+    font-size: 35px;
+    color: white;
+}
+
+.end-buttons button:hover, .end-buttons button:active {
+    background-color: rgb(163, 124, 27) !important;
+}
+
+#begin-game-button {
+    padding: 5px 35px;
+    background-color: rgb(198, 152, 36);
+    border: none;
+    font-family: 'Italianno', cursive;
+    font-size: 40px;
+    color: white;
+    margin-top: 5%;
+}
+
+#begin-game-button:hover, #begin-game-button:active {
+    background-color: rgb(163, 124, 27) !important;
+}
+
+#win-screen, #tie-screen, #lose-screen {
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
 
 @media screen and (max-width: 768px) {
     .game-page-container {

@@ -11,6 +11,12 @@ a {
     margin-bottom: 2%;
 }
 
+.intro h2 {
+    margin-top: 5%;
+    font-family: 'Italianno', cursive;
+    font-size: 60px;
+}
+
 .gods-container, .beasts-container {
     display: flex;
     flex-direction: column;
@@ -38,6 +44,12 @@ a {
     width: 100%;
 }
 
+.card-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .card, .selected-card {
     width: 200px;
     height: 280px;
@@ -48,7 +60,7 @@ a {
 
 .card h3 {
     font-family: "Italianno", cursive;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .buttons-container {
@@ -135,7 +147,7 @@ a {
 }
 
 .begin-button {
-    margin: 5%;
+    margin-top: 23%;
     width: 100%;
 }
 
