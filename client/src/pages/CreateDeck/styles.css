@@ -99,6 +99,10 @@ a {
     margin-left: 7.5%;
 }
 
+.card-content p {
+    font-size: 100%;
+}
+
 .card-img, .selected-card img {
     width: 99%;
     height: 182px;
