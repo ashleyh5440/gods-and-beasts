@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLocation,  } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 
@@ -14,6 +15,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import 'animate.css'
 import '../Game/styles.css';
 
 function Game() {
@@ -31,8 +33,6 @@ function Game() {
     const [gameStarted, setGameStarted] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [gameResult, setGameResult] = useState(null);
-    // const [gameWon, setGameWon] = useState(false);
-    // const [gameLost, setGameLost] = useState(false);
 
     const gameCardStyle = (category) => {
         return {
@@ -50,13 +50,11 @@ function Game() {
         carouselRef.current.next();
     };
 
-
-    // const [numCards, setNumCards] = useState(10);
-    const [wins, setWins] = useState(0);
-    const [losses, setLosses] = useState(0);
     const [ties, setTies] = useState(0);
 
     const [userLifePoints, setUserLifePoints] = useState(5000);
+    const [userWins, setUserWins] = useState(0);
+    const [userLossess, setUserLosses] = useState(0)
     const [userAttack, setUserAttack] = useState(0);
     const [userDefend, setUserDefend] = useState(0);
     const [userCard, setUserCard] = useState();
@@ -66,6 +64,8 @@ function Game() {
     const [selectedDefensePoints, setSelectedDefensePoints] = useState();
 
     const [opponentLifePoints, setOpponentLifePoints] = useState(5000);
+    const [opponentWins, setOpponentWins] = useState(0);
+    const [opponentLossess, setOpponentLosses] = useState(0)
     const [opponentCard, setOpponentCard] = useState();
     const [showOpponentCard, setShowOpponentCard] = useState(false);
     
@@ -77,7 +77,6 @@ function Game() {
         //userCardIndex = the order of cards in the carousel
     let [userCardIndex, setUserCardIndex] = useState(0);
 
-
     //keep track of the cards in the user's deck
     useEffect(() => {
         console.log("remaining user cards", userDeck);
@@ -87,7 +86,6 @@ function Game() {
     const carouselIndex = (selectedIndex, e) => {
         setUserCardIndex(selectedIndex)
         const userCardEl = selectedCards[selectedIndex];
-        // console.log("index:", selectedIndex, userCardEl, "userCardIndex:", userCardIndex);
         if (userCardEl) {
             setSelectedAttackPoints(userCardEl.attack_points || 0)
             setSelectedDefensePoints(userCardEl.defense_points || 0)
@@ -204,19 +202,20 @@ function Game() {
         
         //move card to the center
         const userCard = selectedCards[userCardIndex]
-        // console.log("userCardIndex", userCardIndex)
         setUserCard(userCard)
         console.log("user's card:", userCard)
 
         setUserCardIndex(0)
 
       //update user deck
-      updateDeck(userCardIndex);
-      console.log("remaining user cards", userDeck)
-      console.log("deck count", deckCount)
+        updateDeck(userCardIndex);
+        console.log("remaining user cards", userDeck)
+        console.log("deck count", deckCount)
         
         //reveal the computer's card 
-        setShowOpponentCard(true);
+        setTimeout(() => {
+            setShowOpponentCard(true);
+        }, 3000);
 
         setUserAttack(userCard.attack_points || 0)
         setUserDefend(userCard.defense_points || 0)
@@ -242,7 +241,9 @@ function Game() {
       console.log("deck count", deckCount)
         
         //reveal the computer's card 
-        setShowOpponentCard(true);
+        setTimeout(() => {
+            setShowOpponentCard(true);
+        }, 3000);
 
         setUserAttack(userCard.attack_points || 0)
         setUserDefend(userCard.defense_points || 0)
@@ -270,21 +271,12 @@ function Game() {
             setTimeout(() => {
                 setGameOver(true);
                 // setGameStarted(false);
-                if (wins > losses || userLifePoints > opponentLifePoints){
-                    console.log("Enemies defeated; you won the game!")
+                if (userWins > opponentWins || userLifePoints > opponentLifePoints){
                     setGameResult('win');
-                    // setGameOver(true);
-                    // setGameStarted(false);
-                } else if (wins === losses || userLifePoints === opponentLifePoints) {
-                    console.log("No winners; it's a tie")
+                } else if (userWins === opponentWins || userLifePoints === opponentLifePoints) {
                     setGameResult('tie');
-                    // setGameOver(true);
-                    // setGameStarted(false);
                 } else {
-                    console.log("You were slaughtered. Be ashamed")
                     setGameResult('lose');
-                    // setGameOver(true);
-                    // setGameStarted(false);
                 }
             }, 5000)
         }
@@ -310,35 +302,50 @@ function Game() {
             if (opponentSelection === 'opAttack') {
                 console.log("opp attack points", opponentAttack)
                 if (userAttack > opponentAttack) {
-                    setWins((prev) => prev + 1);
-                    setOpponentLifePoints ((prev) => prev - (userAttack || 0)); //decrease opponent's life points by user's attack points
-                    setUserLifePoints ((prev) => prev + (opponentAttack || 0)); //increase user's life points by opponent's attack points
-                    console.log("you win!!")
+                    setTimeout(() => {
+                        setUserWins((prev) => prev + 1);
+                        setOpponentLosses((prev) => prev + 1);
+                        setOpponentLifePoints ((prev) => prev - (userAttack || 0)); //decrease opponent's life points by user's attack points
+                        setUserLifePoints ((prev) => prev + (opponentAttack || 0)); //increase user's life points by opponent's attack points
+                        console.log("you win!!")
+                    }, 4000);
                 } else if (userAttack === opponentAttack) {
-                    setTies((prev) => prev + 1);
-                    console.log("it's a tie")
-                    //do nothing
+                    setTimeout(() => {
+                        setTies((prev) => prev + 1);
+                        console.log("it's a tie")
+                    }, 4000);
                 } else {
-                    setLosses((prev) => prev + 1);
-                    setOpponentLifePoints ((prev) => prev + (userAttack || 0));
-                    setUserLifePoints((prev) => prev - (opponentAttack || 0));
-                    console.log("you lose :(")
+                    setTimeout(() => {
+                        setUserLosses((prev) => prev + 1);
+                        setOpponentWins((prev) => prev + 1);
+                        setOpponentLifePoints ((prev) => prev + (userAttack || 0));
+                        setUserLifePoints((prev) => prev - (opponentAttack || 0));
+                        console.log("you lose :(")
+                    }, 4000);
                 }
 
                     //opponent defends
                     //if attacker loses, half of the attack points from that card are taken from their total life points; if defender loses, the card’s defense points are subtracted from their total life points
             } else if (opponentSelection === 'opDefend') {
                 if (userAttack > opponentDefend) {
-                    setWins((prev) => prev + 1);
-                    setOpponentLifePoints((prev) => prev - (userAttack || 0));
-                    console.log("you win!!")
+                    setTimeout(() => {
+                        setUserWins((prev) => prev + 1);
+                        setOpponentLosses((prev) => prev + 1);
+                        setOpponentLifePoints((prev) => prev - (userAttack || 0));
+                        console.log("you win!!")
+                    }, 4000);
                 } else if (userAttack === opponentDefend) {
-                    setTies((prev) => prev + 1);
-                    console.log("it's a tie")
+                    setTimeout(() => {
+                        setTies((prev) => prev + 1);
+                        console.log("it's a tie")
+                    }, 4000);
                 } else {
-                    setLosses((prev) => prev + 1);
-                    setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
-                    console.log("you lose :(")
+                    setTimeout(() => {
+                        setUserLosses((prev) => prev + 1);
+                        setOpponentWins((prev) => prev + 1);
+                        setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
+                        console.log("you lose :(")
+                    }, 4000);
                 }
             }
             //userDefends
@@ -346,16 +353,24 @@ function Game() {
                 //opponent attacks
             if (opponentSelection === 'opAttack') {
                 if (userDefend > opponentAttack) {
-                    setWins((prev) => prev + 1);
-                    setUserLifePoints ((prev) => prev + (opponentAttack || 0));
+                    setTimeout(() => {
+                        setUserWins((prev) => prev + 1);
+                        setOpponentLosses((prev) => prev + 1);
+                        setUserLifePoints ((prev) => prev + (opponentAttack || 0));
                     console.log("you win!!")
+                    }, 4000);
                 } else if (userDefend === opponentAttack) {
-                    setTies((prev) => prev + 1);
-                    console.log("it's a tie")
+                    setTimeout(() => {
+                        setTies((prev) => prev + 1);
+                        console.log("it's a tie")
+                    }, 4000);
                 } else {
-                    setLosses((prev) => prev + 1);
-                    setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
-                    console.log("you lose :(")
+                    setTimeout(() => {
+                        setUserLosses((prev) => prev + 1);
+                        setOpponentWins((prev) => prev + 1);
+                        setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
+                        console.log("you lose :(")
+                    }, 4000);
                 }
                     //opponent defends
             } else if (opponentSelection === 'opDefend') {
@@ -388,47 +403,47 @@ function Game() {
                 <div>
                     {/* end screen */}
                     {gameOver && (
-                        <div>
+                        <div className="end-screen">
                             {gameResult === 'win' &&
-                                <div>
+                                <div className="animate__animated animate__fadeInDown animate__delay-2s" id="win-screen">
                                     <h1>You Won</h1>
+                                    <div className="end-buttons">
+                                        <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
+                                        <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                    </div>
                                 </div>
                             }
                             {gameResult === 'tie' &&
-                                <div>
+                                <div className="animate__animated animate__fadeInDown animate__delay-2s" id="tie-screen">
                                     <h1>It's a tie</h1>
+                                    <div className="end-buttons">
+                                        <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
+                                        <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                    </div>
                                 </div>
                             }
                             {gameResult === 'lose' &&
-                                <div>
+                                <div id="lose-screen">
                                     <h1>You lose</h1>
+                                    <div className="end-buttons">
+                                        <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
+                                        <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                    </div>
                                 </div>
                             }
                         </div>
                     )}
                     {/* game screen */}
                     {!gameOver && (
-                        <div className="game-page-container">
-                            <div className="decks">
-                                <div className="opponent-deck">
-                                    <p>Life points: {opponentLifePoints}</p>
-                                    <img src={cardBack} style={{ width: "200px", height: "280px" }} />
-                                </div>
-    
-                                {/* deck animation, still working on fixing */}
-                                {/* <div className="user-deck">
-                                    <h3>Your Deck</h3>
-                                    <CardDeck ref={cardRefs} selectedCards={selectedCards} />
-                                    <div className="user-card-info">
-                                        <p>Attack Points: {userAttack} </p>
-                                        <p>Defense Points: {userDefend}</p>
-                                    </div>
-                                    <Button variant="primary" style={{ margin: "2% 17%" }} onClick={attack}>Attack</Button>
-                                    <Button variant="primary" style={{ margin: "2% 17%" }}>Defend</Button>
-                                </div> */}
-    
-                                <div className="user-deck">
+                        <div className="game-screen">
+                            <Row>
+                                <Col className="user-deck">
                                     <p>Life points: {userLifePoints}</p>
+                                    <div className="points-box">
+                                        <p>Wins: {userWins}</p>
+                                        <p>Losses: {userLossess}</p>
+                                        <p>Ties: {ties}</p>
+                                    </div>
                                     <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
                                         {userDeck.map((card, index) => (
                                             <Carousel.Item key={index}>
@@ -451,57 +466,62 @@ function Game() {
                                     </Carousel>
                                     <Container className="user-card-info">
                                         <Row>
-                                            <Col><p>Attack Points: {selectedAttackPoints} </p></Col>
-                                            <Col><p>Defense Points: {selectedDefensePoints}</p> </Col>
+                                            <Col><p style={{fontSize: "17px"}}>Attack Points: {selectedAttackPoints} </p></Col>
+                                            <Col><p style={{fontSize: "17px"}}>Defense Points: {selectedDefensePoints}</p> </Col>
                                         </Row>
-                                        <Row>
-                                            <Col><Button variant="primary" style={{ margin: "2% 17%" }} onClick={attack}>Attack</Button></Col>
-                                            <Col><Button variant="primary" style={{ margin: "2% 17%" }} onClick={defend}>Defend</Button></Col>
+                                        <Row className="play-buttons">
+                                            <Col><Button variant="primary" onClick={attack}>Attack</Button></Col>
+                                            <Col><Button variant="primary"onClick={defend}>Defend</Button></Col>
                                         </Row>
                                     </Container>
-                                </div>
-                            </div>
-                            <div className="arena">
-                                <div className="battleground">
-                                    <div className="opponent-card">
-                                        {showOpponentCard ? (
-                                            opponentCard && (
-                                                <div className={`card ${opponentCard.category}`} style={gameCardStyle(opponentCard.category)}>
+                                
+                                </Col>
+                                <Col className="arena" xs={6}>
+                                    <div className="battleground">
+                                        <div className="user-card">
+                                            {userCard && (
+                                                <div className={`card ${userCard.category} animate__animated animate__slideInLeft`} style={gameCardStyle(userCard.category)}>
                                                     <div className="card-content">
                                                         <div className="name-category">
-                                                            <h3>{opponentCard.name}</h3>
+                                                            <h3>{userCard.name}</h3>
                                                         </div>
                                                         <div className="card-img">
-                                                            <img src={`/images/${opponentCard.image}`} />
+                                                            <img src={`/images/${userCard.image}`} />
                                                         </div>
                                                     </div>
                                                 </div>
+                                        )}
+                                        </div>
+                                        <div className="opponent-card">
+                                            {showOpponentCard ? (
+                                                opponentCard && (
+                                                    <div className={`card ${opponentCard.category} animate__animated animate__slideInRight`} style={gameCardStyle(opponentCard.category)}>
+                                                        <div className="card-content">
+                                                            <div className="name-category">
+                                                            <h3>{opponentCard.name}</h3>
+                                                            </div>
+                                                            <div className="card-img">
+                                                                <img src={`/images/${opponentCard.image}`} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             )
                                         ) : (
                                                 <div></div>
                                             )}
+                                        </div>
                                     </div>
-                                    <div className="user-card">
-                                        {userCard && (
-                                            <div className={`card ${userCard.category}`} style={gameCardStyle(userCard.category)}>
-                                                <div className="card-content">
-                                                    <div className="name-category">
-                                                        <h3>{userCard.name}</h3>
-                                                    </div>
-                                                    <div className="card-img">
-                                                        <img src={`/images/${userCard.image}`} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
+                                </Col>
+                                <Col className="opponent-deck">
+                                    <p>Life points: {opponentLifePoints}</p>
+                                    <div className="points-box">
+                                        <p>Wins: {opponentWins}</p>
+                                        <p>Losses: {opponentLossess}</p>
+                                        <p>Ties: {ties}</p>
                                     </div>
-                                </div>
-                                <div style={{ width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-                                    <p>Wins: {wins}</p>
-                                    <p>Losses: {losses}</p>
-                                    <p>Ties: {ties}</p>
-                                </div>
-                            </div>
+                                    <img src={cardBack} style={{ width: "200px", height: "280px" }} />
+                                </Col>
+                            </Row>
                         </div>
                     )}
                 </div>
@@ -512,99 +532,3 @@ function Game() {
 }
 
 export default Game;
-
-{/* <div className="game-page-container">
-                <div className="decks">
-                    <div className="opponent-deck">
-                        <p>Life points: {opponentLifePoints}</p>
-                        <img src={cardBack} style={{ width: "200px", height: "280px"}}/>
-                    </div> */}
-
-                        {/* deck animation, still working on fixing */}
-                    {/* <div className="user-deck">
-                        <h3>Your Deck</h3>
-                        <CardDeck ref={cardRefs} selectedCards={selectedCards} />
-                        <div className="user-card-info">
-                            <p>Attack Points: {userAttack} </p>
-                            <p>Defense Points: {userDefend}</p>
-                        </div>
-                        <Button variant="primary" style={{margin: "2% 17%"}} onClick={attack}>Attack</Button>
-                        <Button variant="primary" style={{margin: "2% 17%"}}>Defend</Button>
-                    </div> */}
-
-                    {/* <div className="user-deck">
-                        <p>Life points: {userLifePoints}</p>
-                        <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
-                        {userDeck.map((card, index) => (
-                            <Carousel.Item key={index}>
-                                <div className={`card ${card.category}`} style={{ backgroundImage: gameCardStyle(card.category).backgroundImage }} ref={selectedCardRef}>
-                                    <div className="card-content">
-                                        <div className="name-category">
-                                            <h3>{card.name}</h3>
-                                        </div>
-                                        <div className="card-img">
-                                            <img src={`/images/${card.image}`} alt={`Slide ${index}`} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Carousel.Item>
-                            ))}
-                            <div className="carousel-buttons-container">
-                                <Button variant="primary" onClick={handlePrevClick}>&#10094;</Button>
-                                <Button variant="primary" onClick={handleNextClick}>&#10095;</Button>
-                            </div>
-                        </Carousel>
-                        <Container className="user-card-info">
-                            <Row>
-                                <Col><p>Attack Points: {selectedAttackPoints} </p></Col>
-                                <Col><p>Defense Points: {selectedDefensePoints}</p> </Col>
-                            </Row>
-                            <Row>
-                                <Col><Button variant="primary" style={{margin: "2% 17%"}} onClick={attack}>Attack</Button></Col>
-                                <Col><Button variant="primary" style={{margin: "2% 17%"}} onClick={defend}>Defend</Button></Col>
-                            </Row>
-                        </Container>
-                        
-                    </div>
-                </div>
-                <div className="arena">
-                    <div className="battleground">
-                        <div className="opponent-card">
-                            {showOpponentCard ? (
-                                opponentCard && (
-                                        <div className={`card ${opponentCard.category}`} style={gameCardStyle (opponentCard.category)}>
-                                            <div className="card-content">
-                                                <div className="name-category">
-                                                    <h3>{opponentCard.name}</h3>
-                                                </div>
-                                                <div className="card-img">
-                                                    <img src={`/images/${opponentCard.image}`} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                )
-                            ) : (
-                                <div></div>
-                            )}
-                        </div>
-                        <div className="user-card">
-                            {userCard && (
-                                <div className={`card ${userCard.category}`} style={gameCardStyle(userCard.category)}>
-                                    <div className="card-content">
-                                        <div className="name-category">
-                                            <h3>{userCard.name}</h3>
-                                        </div>
-                                        <div className="card-img">
-                                            <img src={`/images/${userCard.image}`} />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div style={{width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-                        <p>Wins: {wins}</p>
-                        <p>Losses: {losses}</p>
-                    </div>
-                </div>
-            </div> */}
