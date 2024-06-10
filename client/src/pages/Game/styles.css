@@ -68,19 +68,19 @@ p, li {
     
 }
 
-.carousel-buttons-container {
+.deck-buttons-container {
     display: flex; 
     flex-direction: row;
     justify-content: space-between;
     width: 70%;
 }
 
-.carousel-buttons-container button {
+.deck-buttons-container button {
     border: none;
     background-color: rgba(0, 0, 0, 0.327);
 }
 
-.carousel-buttons-container button:hover,  .carousel-buttons-container button:active {
+.deck-buttons-container button:hover,  .deck-buttons-container button:active {
     background-color: black;
 }
 
@@ -93,11 +93,11 @@ p, li {
     width: 300%;
 }
 
-.carousel-inner {
+.user-deck-carousel .carousel-inner {
     width: 100%;
 }
 
-.carousel-item {
+.user-deck-carousel .carousel-inner .carousel-item {
     width: 220px;
 }
 
@@ -187,7 +187,7 @@ p, li {
 }
 
 @media screen and (min-width: 1025px) {
-    .carousel-item {
+    .user-deck-carousel .carousel-inner .carousel-item .carousel-item {
         margin-left: 15%;
     }
 }

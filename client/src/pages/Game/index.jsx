@@ -460,7 +460,7 @@ function Game() {
                                             </Carousel.Item>
                                         ))}
                                     </Carousel>
-                                    <div className="carousel-buttons-container">
+                                    <div className="deck-buttons-container">
                                             <Button variant="primary" onClick={handlePrevClick}>&#10094;</Button>
                                             <Button variant="primary" onClick={handleNextClick}>&#10095;</Button>
                                         </div>

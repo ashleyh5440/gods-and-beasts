@@ -1,3 +1,7 @@
+h3 {
+    color: white;
+}
+
 a {
     text-decoration: none;
     color: white;
@@ -15,6 +19,7 @@ a {
     margin-top: 5%;
     font-family: 'Italianno', cursive;
     font-size: 60px;
+    color: white;
 }
 
 .gods-container, .beasts-container {
