@@ -15,8 +15,8 @@ import '../CreateDeck/styles.css';
 
 const Card = ({ id, category, name, image, description, attack_points, defense_points, selectedCards, setSelectedCards, exceedLimit, setExceedLimit }) => {
     const cardRef = useRef(null);
-    const godCard = "url(../../../public/god.png)";
-    const beastCard = "url(../../../public/beast.png)";
+    const godCard = "url(god.png)";
+    const beastCard = "url(beast.png)";
 
     //changes background image based on category
     let backgroundImage;

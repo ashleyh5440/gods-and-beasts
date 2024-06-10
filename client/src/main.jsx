@@ -9,8 +9,8 @@ import Home from './pages/Home';
 import Game from './pages/Game';
 import Lore from './pages/Lore';
 import CreateDeck from './pages/CreateDeck';
-import LogIn from './pages/LogIn';
-import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Options from './pages/Options';
 import CardDeck from './components/CardDeck';
 
@@ -49,11 +49,11 @@ const router = createBrowserRouter([
       },
       {
         path:'/signup',
-        element: <SignUp />,
+        element: <Signup />,
       },
       {
         path: '/login',
-        element: <LogIn />
+        element: <Login />
       },
     ],
   },

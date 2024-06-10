@@ -36,7 +36,7 @@ function Game() {
 
     const gameCardStyle = (category) => {
         return {
-            backgroundImage: category === "God" ? "url(../../../public/god.png)" : "url(../../../public/beast.png)",
+            backgroundImage: category === "God" ? "url(god.png)" : "url(beast.png)",
             backgroundRepeat: "no repeat",
             backgroundPosition: "center",
         };
