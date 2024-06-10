@@ -1,8 +1,8 @@
 # Gods and Beasts
 
-install: npm i
+Mythology card game.
 
-run: npm run development
+**[Gods and Beast](https://gods-and-beasts.onrender.com/)** live site.
 
 
 

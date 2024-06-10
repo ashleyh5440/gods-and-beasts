@@ -459,11 +459,11 @@ function Game() {
                                                 </div>
                                             </Carousel.Item>
                                         ))}
-                                        <div className="carousel-buttons-container">
+                                    </Carousel>
+                                    <div className="carousel-buttons-container">
                                             <Button variant="primary" onClick={handlePrevClick}>&#10094;</Button>
                                             <Button variant="primary" onClick={handleNextClick}>&#10095;</Button>
                                         </div>
-                                    </Carousel>
                                     <Container className="user-card-info">
                                         <Row>
                                             <Col><p style={{fontSize: "17px"}}>Attack Points: {selectedAttackPoints} </p></Col>
@@ -476,7 +476,7 @@ function Game() {
                                     </Container>
                                 
                                 </Col>
-                                <Col className="arena" xs={6}>
+                                <Col className="arena" xs={5}>
                                     <div className="battleground">
                                         <div className="user-card">
                                             {userCard && (

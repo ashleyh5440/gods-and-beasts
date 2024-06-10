@@ -17,9 +17,9 @@ gsap.registerPlugin(Draggable);
   const getBackgroundImage = (category) => {
     switch (category) {
       case 'God':
-        return "url(../../../public/god.png)";
+        return "url(god.png)";
       case 'Beast':
-        return "url(../../../public/beast.png)";
+        return "url(beast.png)";
       default:
         return "";
     }
