@@ -18,7 +18,7 @@ p, li {
     background-image: url(../../../public/battleground.gif);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 100%;
+    background-size: 100% 100%;
 
 }
 
@@ -116,16 +116,19 @@ p, li {
 
 .battleground {
     width: 100%;
-    height: 280px;
+    /* height: 280px; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 8%;
+    border: 4px solid red;
 }
 
 .opponent-card, .user-card {
     width: 200px;
     height: 280px;
+    border: 2px solid green;
+    margin-top: 20%;
 }
 
 .play-buttons button {
@@ -136,6 +139,30 @@ p, li {
 
 .play-buttons button:hover, .play-buttons button:active {
     background-color: rgb(163, 124, 27) !important;
+}
+
+.blood-animation {
+    position: absolute;
+    width: 215px;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.blood-animation img {
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .end-screen {

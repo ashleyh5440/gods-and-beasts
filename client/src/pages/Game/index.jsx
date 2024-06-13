@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { useLocation,  } from "react-router-dom";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useQuery } from "@apollo/client";
@@ -10,6 +8,7 @@ import CardDeck from '../../components/CardDeck';
 // import CardDeck from '../../components/CardDeck/CardDeck.jsx';
 
 import cardBack from '../../../public/card-back.png';
+import blood from '../../../public/blood.png'
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,6 +16,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import 'animate.css'
 import '../Game/styles.css';
+
 
 function Game() {
 
@@ -68,8 +68,12 @@ function Game() {
     const [opponentLossess, setOpponentLosses] = useState(0)
     const [opponentCard, setOpponentCard] = useState();
     const [showOpponentCard, setShowOpponentCard] = useState(false);
+
+    const [losingCard, setLosingCard] = useState(null);
+    const [showLosingAnimation, setShowLosingAnimation] = useState(false);
+
     
-    const userCardRef = useRef(null);
+    // const userCardRef = useRef(null);
     // const selectedCardRef = useRef(null);
     const selectedCardRef = useRef([]);
     const opponentCardRef = useRef();
@@ -134,21 +138,6 @@ function Game() {
         }
     }, [data, error]);
 
-    // useEffect(() => {
-    //     if (data) {
-    //         const characters = data.getCharacters || [];
-    //         const randomIndex = Math.floor(Math.random() * characters.length);
-    //         // const randomOpponentCard  = characters[randomIndex];
-    //         const randomCard = characters[randomIndex];
-    //         setOpponentCard(randomCard);
-    //         console.log("computer choices:", characters)
-    //         console.log("computer card", randomCard)
-    //     }
-    //     if (error) {
-    //         console.error("error getting opponent card:", error);
-    //     }
-    // }, [data, error]);
-
     //show the points for the card currently showing in the user deck
     useEffect(() => {
         if (selectedCards.length > 0) {
@@ -160,41 +149,6 @@ function Game() {
             setSelectedDefensePoints(0);
         }
     }, [selectedCards]);
-    
-    // const tl = useRef();
-    // gsap.config({ debug: true })
-
-    // useGSAP(() => {
-    //     console.log("useGSAP hook triggering")
-    //     const moveUserCard = () => {
-    //         console.log("moveCard function called")
-    //         const selectedCardEl = selectedCardRef.current[carouselRef.current ? carouselRef.current.state?.selectedIndex: 0];
-    //         console.log("selectedCardEl:", selectedCardEl)
-    //    if(selectedCardEl && userCardRef.current) {
-    //         const userCardInitPosition = selectedCardEl.getBoundingClientRect();
-    //         const userCardPlayPosition = userCardRef.current.getBoundingClientRect();
-
-    //         const moveX = userCardPlayPosition.left - userCardInitPosition.left;
-    //         const moveY = userCardPlayPosition.top - userCardInitPosition.top;
-
-    //         tl.current = gsap.timeline({ paused: true })
-    //         .to(selectedCardEl, {
-    //             x: moveX,
-    //             y: moveY,
-    //             duration: 1,
-    //         });
-    //         console.log("timeline", tl.current);
-    //         tl.current.play()
-    //     }
-    //     };
-    // }, { scope: selectedCardRef });
-
-    // const moveUserCard = () => {
-    //     if (tl.current) {
-    //         tl.current.reversed(!tl.current.reversed()).play();
-    //     }
-    //     console.log("see me? did i move?")
-    // }
 
    {/* runs when user clicks attack button */} 
     const attack = async() => {
@@ -262,10 +216,24 @@ function Game() {
                 const characters = data.getCharacters || [];
                 fetchOpponentCard(characters);
             }
-        }, 5000)
+        }, 10000)
     }
 
-    //game logic
+    // const renderLosingCard = () => {
+    //     if (losingCard) {
+    //         return (
+    //             <div className="losing-card" style={{ position: 'relative', display: 'inline-block' }}>
+    //                 {/* The losing card content */}
+    //                 <img src={blood} alt="Losing Blood" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+    //             </div>
+    //         );
+    //     }
+    //     return null;
+    // }
+
+                        //game logic
+
+    //end the game
     function endGame() {
         if ((deckCount === 0) || (userLifePoints === 0) || (opponentLifePoints === 0)){
             setTimeout(() => {
@@ -278,7 +246,7 @@ function Game() {
                 } else {
                     setGameResult('lose');
                 }
-            }, 5000)
+            }, 10000)
         }
     }
 
@@ -288,11 +256,15 @@ function Game() {
         const randomCard = opponentCard;
         console.log("opponent card", randomCard);
 
+        const userCard = selectedCards[userCardIndex];
+
         const opponentAttack = randomCard.attack_points || 0;
         const opponentDefend = randomCard.defense_points || 0;
             
         const opponentSelection = Math.random() > 0.5 ? 'opAttack' : 'opDefend'
-        console.log("opponentSelection:", opponentSelection)
+        console.log("opponentSelection:", opponentSelection);
+
+        let losingCard = null; 
 
              //user attacks 
         if (userSelection === 'attack') {
@@ -308,6 +280,8 @@ function Game() {
                         setOpponentLifePoints ((prev) => prev - (userAttack || 0)); //decrease opponent's life points by user's attack points
                         setUserLifePoints ((prev) => prev + (opponentAttack || 0)); //increase user's life points by opponent's attack points
                         console.log("you win!!")
+                        losingCard = opponentCard;
+                        console.log("losing card?", losingCard)
                     }, 4000);
                 } else if (userAttack === opponentAttack) {
                     setTimeout(() => {
@@ -322,6 +296,8 @@ function Game() {
                         setUserLifePoints((prev) => prev - (opponentAttack || 0));
                         console.log("you lose :(")
                     }, 4000);
+                    losingCard = userCard;
+                    console.log("losing card?", losingCard)
                 }
 
                     //opponent defends
@@ -334,6 +310,8 @@ function Game() {
                         setOpponentLifePoints((prev) => prev - (userAttack || 0));
                         console.log("you win!!")
                     }, 4000);
+                    losingCard = opponentCard;
+                    console.log("losing card?", losingCard)
                 } else if (userAttack === opponentDefend) {
                     setTimeout(() => {
                         setTies((prev) => prev + 1);
@@ -346,6 +324,8 @@ function Game() {
                         setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
                         console.log("you lose :(")
                     }, 4000);
+                    losingCard = userCard;
+                    console.log("losing card?", losingCard)
                 }
             }
             //userDefends
@@ -357,8 +337,10 @@ function Game() {
                         setUserWins((prev) => prev + 1);
                         setOpponentLosses((prev) => prev + 1);
                         setUserLifePoints ((prev) => prev + (opponentAttack || 0));
-                    console.log("you win!!")
+                        console.log("you win!!")
                     }, 4000);
+                    losingCard = opponentCard;
+                    console.log("losing card?", losingCard)
                 } else if (userDefend === opponentAttack) {
                     setTimeout(() => {
                         setTies((prev) => prev + 1);
@@ -371,11 +353,19 @@ function Game() {
                         setUserLifePoints((prev) => prev - Math.floor((opponentAttack || 0) / 2));
                         console.log("you lose :(")
                     }, 4000);
+                    losingCard = userCard;
+                    console.log("losing card?", losingCard)
                 }
                     //opponent defends
             } else if (opponentSelection === 'opDefend') {
                 setTies((prev) => prev + 1);
             }
+        }
+        if (losingCard) {
+            setTimeout(() => {
+                setLosingCard(losingCard);
+                setShowLosingAnimation(true);
+            }, 6000);
         }
         //clear cards from arena to start again
         clearArena();
@@ -478,7 +468,8 @@ function Game() {
                                 </Col>
                                 <Col className="arena" xs={5}>
                                     <div className="battleground">
-                                        <div className="user-card">
+                                        <div>
+                                            <div className="user-card">
                                             {userCard && (
                                                 <div className={`card ${userCard.category} animate__animated animate__slideInLeft`} style={gameCardStyle(userCard.category)}>
                                                     <div className="card-content">
@@ -488,9 +479,15 @@ function Game() {
                                                         <div className="card-img">
                                                             <img src={`/images/${userCard.image}`} />
                                                         </div>
+                                                        {showLosingAnimation && losingCard === userCard && (
+                                                            <div className="blood-animation">
+                                                                <img src={blood} />
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                         )}
+                                        </div>
                                         </div>
                                         <div className="opponent-card">
                                             {showOpponentCard ? (
@@ -503,6 +500,11 @@ function Game() {
                                                             <div className="card-img">
                                                                 <img src={`/images/${opponentCard.image}`} />
                                                             </div>
+                                                            {showLosingAnimation && losingCard === opponentCard && (
+                                                            <div className="blood-animation">
+                                                                <img src={blood} />
+                                                            </div>
+                                                        )}
                                                         </div>
                                                     </div>
                                             )
