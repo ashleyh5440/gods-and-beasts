@@ -80,21 +80,20 @@ p, li {
     background-color: rgba(0, 0, 0, 0.327);
 }
 
-.deck-buttons-container button:hover,  .deck-buttons-container button:active {
-    background-color: black;
-}
-
-.carousel .slide {
-    width: 100%;
+.deck-buttons-container button:hover, .deck-buttons-container button:active {
+    background-color: black !important;
 }
 
 .user-deck-carousel {
     display: flex;
-    width: 300%;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .user-deck-carousel .carousel-inner {
-    width: 100%;
+    width: 221px;
+    display: flex;
 }
 
 .user-deck-carousel .carousel-inner .carousel-item {
@@ -103,31 +102,38 @@ p, li {
 
 .card {
     background-size: 100% 100%;
+}
 
+.card-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0%;
+    width: 40%;
+}
+
+.selection p {
+    color: white;
+    font-family: 'Italianno', cursive;
+    font-size: 30px;
 }
 
 .user-card-info {
     width: 80%;
-    /* display: flex;
-    flex-direction: row;
-    justify-content: space-around; */
-    /* margin-top: 315px; */
 }
 
 .battleground {
     width: 100%;
-    /* height: 280px; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 8%;
-    border: 4px solid red;
 }
 
 .opponent-card, .user-card {
-    width: 200px;
+    width: 100%;
     height: 280px;
-    border: 2px solid green;
     margin-top: 20%;
 }
 
