@@ -35,17 +35,20 @@ a {
 
 .carousel-container {
     width: 100%;
-    margin: 0%;
+    margin: 0% !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
 .carousel {
-    width: 85%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.carousel-inner {
+.carousel-inner, .carousel-item {
     width: 100%;
 }
 
@@ -53,6 +56,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .card, .selected-card {
@@ -60,7 +64,12 @@ a {
     height: 280px;
     font-size: 13px;
     color: white;
-    margin: 0% 3%;
+    margin: 0%;
+    /* margin: 0% 3%; */
+}
+
+#user-deck .react-card-flip {
+    width: 200px;
 }
 
 .card h3 {
@@ -135,9 +144,10 @@ a {
 }
 
 .add-button {
-    width: 30%;
-    font-size: 10px;
-    padding: 1%;
+    width: 80px;
+    margin-top: 10%;
+    font-size: 12px;
+    padding: 2% 6%;
     background-color: rgb(198, 152, 36);
     border: none;
     color: white;
@@ -156,7 +166,7 @@ a {
 }
 
 .begin-button {
-    margin-top: 23%;
+    margin-top: 300px;
     width: 100%;
 }
 
@@ -181,69 +191,58 @@ a {
 }
 
 #user-deck {
-    width: 80%;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-@media screen and (max-width: 768px) {
-    .carousel {
-        width: 100%;
-    }
-
-    .carousel-inner {
-        width: 100%;
-        margin-left: 1.5%;
+@media screen and (max-width: 1024px) {
+    .col-md-4 {
+        margin: 0% 0.5%;
     }
 }
 
 @media screen and (max-width: 767px) {
-    .carousel {
-        width: 100%
+    .container {
+        width: 100vw !important;
     }
-    .carousel-inner {
+
+    .row {
         width: 100%;
-        margin-left: 1%;
     }
 
     .col-md-6 {
         margin: 0% 3%;
     }
+}
 
-    @media screen and (max-width: 600px) {
-        .carousel-inner {
-            margin-left: 5%;
-        }
+@media screen and (max-width: 500px) {
+    .carousel-inner {
+        margin-left: 25%;
     }
+}
 
-    @media screen and (max-width: 500px) {
-        .carousel-inner {
-            margin-left: 25%;
-        }
+@media screen and (max-width: 400px) {
+    .carousel-inner {
+        margin-left: 20%;
     }
+}
 
-    @media screen and (max-width: 400px) {
-        .carousel-inner {
-            margin-left: 20%;
-        }
+@media screen and (max-width: 360px) {
+    .carousel-inner {
+        margin-left: 18%;
     }
+}
 
-    @media screen and (max-width: 360px) {
-        .carousel-inner {
-            margin-left: 18%;
-        }
+@media screen and (max-width: 320px) {
+    .carousel-inner {
+        margin-left: 13%;
     }
+}
 
-    @media screen and (max-width: 320px) {
-        .carousel-inner {
-            margin-left: 13%;
-        }
-    }
-
-    @media screen and (max-width: 280px) {
-        .carousel-inner {
-            margin-left: 7%;
-        }
+@media screen and (max-width: 280px) {
+    .carousel-inner {
+        margin-left: 7%;
     }
 }

@@ -34,6 +34,22 @@ function Game() {
     const [gameOver, setGameOver] = useState(false);
     const [gameResult, setGameResult] = useState(null);
 
+    const gameCardStyle = (category) => {
+        return {
+            backgroundImage: category === "God" ? "url(god.png)" : "url(beast.png)",
+            backgroundRepeat: "no repeat",
+            backgroundPosition: "center",
+        };
+    };
+
+    const handlePrevClick = () => {
+        carouselRef.current.prev();
+    };
+
+    const handleNextClick = () => {
+        carouselRef.current.next();
+    };
+
     const [ties, setTies] = useState(0);
 
     const [userLifePoints, setUserLifePoints] = useState(5000);
@@ -62,30 +78,8 @@ function Game() {
     const selectedCardRef = useRef([]);
     const opponentCardRef = useRef();
 
-    //keep track of user and computer selection
-    const [userSelectionEl, setUserSelectionEl] = useState(null);
-    const [opponentSelectionEl, setOpponentSelectionEl] = useState(null);
-
-
         //userCardIndex = the order of cards in the carousel
     let [userCardIndex, setUserCardIndex] = useState(0);
-
-    //styling for cards
-    const gameCardStyle = (category) => {
-        return {
-            backgroundImage: category === "God" ? "url(god.png)" : "url(beast.png)",
-            backgroundRepeat: "no repeat",
-            backgroundPosition: "center",
-        };
-    };
-
-    const handlePrevClick = () => {
-        carouselRef.current.prev();
-    };
-
-    const handleNextClick = () => {
-        carouselRef.current.next();
-    };
 
     //keep track of the cards in the user's deck
     useEffect(() => {
@@ -156,8 +150,6 @@ function Game() {
         }
     }, [selectedCards]);
 
-    const opponentChoice = Math.random() < 0.5 ? 'Attack' : 'Defend';
-
    {/* runs when user clicks attack button */} 
     const attack = async() => {
         console.log("attack button clicked")
@@ -179,16 +171,11 @@ function Game() {
             setShowOpponentCard(true);
         }, 3000);
 
-        setTimeout(() => {
-            setUserSelectionEl('Attack')
-            setOpponentSelectionEl(opponentChoice)
-        }, 5000);
-
         setUserAttack(userCard.attack_points || 0)
         setUserDefend(userCard.defense_points || 0)
 
         //run game logic
-        runGame('attack');
+        playUserCard('attack');
     } 
 
     //runs when user clicks defend button
@@ -212,24 +199,18 @@ function Game() {
             setShowOpponentCard(true);
         }, 3000);
 
-        setTimeout(() => {
-            setUserSelectionEl('Defend')
-            setOpponentSelectionEl(opponentChoice)
-        }, 5000);
-
         setUserAttack(userCard.attack_points || 0)
         setUserDefend(userCard.defense_points || 0)
 
         //run game logic
-        runGame('defend');
+        playUserCard('defend');
     } 
 
     //clear the arena and get new fetch for opponent card
     const clearArena = () => {
         setTimeout(() => {
             setShowOpponentCard(false);
-            setUserSelectionEl(null);
-            setOpponentSelectionEl(null);
+            // setShowUserCard(false);
             setUserCard(null);
             if (data && !error) {
                 const characters = data.getCharacters || [];
@@ -238,7 +219,19 @@ function Game() {
         }, 10000)
     }
 
-        //game logic
+    // const renderLosingCard = () => {
+    //     if (losingCard) {
+    //         return (
+    //             <div className="losing-card" style={{ position: 'relative', display: 'inline-block' }}>
+    //                 {/* The losing card content */}
+    //                 <img src={blood} alt="Losing Blood" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+    //             </div>
+    //         );
+    //     }
+    //     return null;
+    // }
+
+                        //game logic
 
     //end the game
     function endGame() {
@@ -257,7 +250,7 @@ function Game() {
         }
     }
 
-    const runGame = (userSelection) => {
+    const playUserCard = (userSelection) => {
         console.log("game logic running", "userSelection:", userSelection);
 
         const randomCard = opponentCard;
@@ -270,8 +263,6 @@ function Game() {
             
         const opponentSelection = Math.random() > 0.5 ? 'opAttack' : 'opDefend'
         console.log("opponentSelection:", opponentSelection);
-        // const opponentChoice = Math.random() < 0.5 ? 'Attack' : 'Defend';
-        // setOpponentSelectionEl(opponentChoice);
 
         let losingCard = null; 
 
@@ -374,7 +365,6 @@ function Game() {
             setTimeout(() => {
                 setLosingCard(losingCard);
                 setShowLosingAnimation(true);
-                console.log("did the blood appear?")
             }, 6000);
         }
         //clear cards from arena to start again
@@ -474,13 +464,11 @@ function Game() {
                                             <Col><Button variant="primary"onClick={defend}>Defend</Button></Col>
                                         </Row>
                                     </Container>
+                                
                                 </Col>
                                 <Col className="arena" xs={5}>
                                     <div className="battleground">
-                                        <div className="card-box">
-                                            <div className="selection">
-                                                <p>{userSelectionEl}</p>
-                                            </div>
+                                        <div>
                                             <div className="user-card">
                                             {userCard && (
                                                 <div className={`card ${userCard.category} animate__animated animate__slideInLeft`} style={gameCardStyle(userCard.category)}>
@@ -501,13 +489,9 @@ function Game() {
                                         )}
                                         </div>
                                         </div>
-                                        <div className="card-box">
-                                            <div className="selection">
-                                               <p>{opponentSelectionEl}</p>
-                                            </div>
-                                            <div className="opponent-card">
-                                                {showOpponentCard ? (
-                                                    opponentCard && (
+                                        <div className="opponent-card">
+                                            {showOpponentCard ? (
+                                                opponentCard && (
                                                     <div className={`card ${opponentCard.category} animate__animated animate__slideInRight`} style={gameCardStyle(opponentCard.category)}>
                                                         <div className="card-content">
                                                             <div className="name-category">
@@ -523,11 +507,10 @@ function Game() {
                                                         )}
                                                         </div>
                                                     </div>
-                                                    )
-                                                ) : (
+                                            )
+                                        ) : (
                                                 <div></div>
-                                                )}
-                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </Col>
