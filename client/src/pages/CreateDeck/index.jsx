@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 import { NavLink, useNavigate } from 'react-router-dom';
 import Draggable from 'gsap/Draggable'; 
+import useSound from 'use-sound';
 
 import Cards from '../../components/CardDeck';
 import CardDeck from '../../components/CardDeck/CardDeck.jsx';
@@ -10,6 +11,7 @@ import CardDeck from '../../components/CardDeck/CardDeck.jsx';
 import ReactCardFlip from 'react-card-flip';
 import { Carousel, Container, Row, Col } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+import cardSound from '/sound-effects/card-sound.mp3';
 
 import '../CreateDeck/styles.css';
 
@@ -34,11 +36,13 @@ const Card = ({ id, category, name, image, description, attack_points, defense_p
     }
 
     const [isFlipped, setIsFlipped] = useState(false);
+    const [playCardSound] = useSound(cardSound);
 
     //event handler for flipping cards
     const handleClick = (e) => {
         e.preventDefault();
         setIsFlipped(!isFlipped);
+        playCardSound()
     };
 
     const handleDrag = (event) => {
@@ -208,8 +212,8 @@ function CreateDeck() {
         <section id="create-container">
             <div className="intro">
                 <h2>Build Your Army</h2>
-                <p>Choose ten cards to take into battle.<br />
-                Click on the card to flip it over.</p>
+                <p>Choose 10 cards to take into battle.<br />
+                Click on the card to flip it and read more about the character.</p>
             </div>
             <Container>
                 <Row>
@@ -305,95 +309,6 @@ function CreateDeck() {
                     </Col>
                 </Row>
             </Container>
-            {/* <div className="gods-container">
-                <h3>Gods</h3>
-                <div className="carousel-container">
-                    <Carousel ref={godsCarouselRef}>
-                        {chunkedGodCharacters.map((chunk, index) => (
-                            <Carousel.Item key={index}>
-                                <div className="card-row">
-                                    {chunk.map((character, idx) => (
-                                        <div className={`col-md-${12 / cardsPerSlide}`} key={idx}>
-                                            <Card
-                                                id={character._id}
-                                                category={character.category}
-                                                name={character.name}
-                                                image={character.image}
-                                                description={character.description}
-                                                attack_points={character.attack_points}
-                                                defense_points={character.defense_points}
-                                                selectedCards={selectedCards}
-                                                setSelectedCards={setSelectedCards}
-                                                exceedLimit={exceedLimit}
-                                                setExceedLimit={setExceedLimit}
-                                                addToDeck={addToDeck}
-                                            />
-
-                                        </div>
-                                    ))}
-                                </div>
-                            </Carousel.Item>
-                        ))}
-                    </Carousel>
-                </div>
-                <div className="buttons-container" id="gods">
-                    <Button variant="primary" onClick={handleGodsPrevClick}>&#10094;</Button>
-                    <Button variant="primary" onClick={handleGodsNextClick}>&#10095;</Button>
-                </div>
-            </div>
-            <div className="beasts-container">
-                <h3>Beasts</h3>
-                <div className="carousel-container">
-                    <Carousel ref={beastsCarouselRef}>
-                        {chunkedBeastCharacters.map((chunk, index) => (
-                            <Carousel.Item key={index}>
-                                <div className="card-row">
-                                    {chunk.map((character, idx) => (
-                                        <div className={`col-md-${12 / cardsPerSlide}`} key={idx}>
-                                            <Card
-                                                id={character._id}
-                                                category={character.category}
-                                                name={character.name}
-                                                image={character.image}
-                                                description={character.description}
-                                                attack_points={character.attack_points}
-                                                defense_points={character.defense_points}
-                                                selectedCards={selectedCards}
-                                                setSelectedCards={setSelectedCards}
-                                                exceedLimit={exceedLimit}
-                                                setExceedLimit={setExceedLimit}
-                                                addToDeck={addToDeck}
-                                            /> 
-
-                                        </div>
-                                    ))}
-                                </div>
-                            </Carousel.Item>
-                        ))}
-                    </Carousel>
-                </div>
-                <div className="buttons-container" id="beasts">
-                    <Button variant="primary" onClick={handleBeastsPrevClick}>&#10094;</Button>
-                    <Button variant="primary" onClick={handleBeastsNextClick}>&#10095;</Button>
-                </div>
-            </div>
-            <br />
-   
-            <div id="user-deck">
-                <CardDeck
-                    selectedCards={selectedCards}
-                    exceedLimit={exceedLimit}
-                />
-            </div>
-            <div className="exceeded">
-                {exceedLimit && <p>You can only choose 10 cards.</p>}
-            </div>
-            {selectedCards.length === 10 && (
-                <div className="begin-button">
-                    <Button variant="primary" onClick={() => handleBeginClick()}><NavLink to={{ pathname: "/game", state: { selectedCards: selectedCards } }}>Begin</NavLink></Button>
-
-                </div>
-            )} */}
         </section>
     );
 }

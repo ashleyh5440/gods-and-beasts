@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/Button';
-import 'animate.css';
 import logo from '../../assets/logo.gif';
+import 'animate.css';
 import { NavLink } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
@@ -16,11 +16,11 @@ function Home() {
     useEffect(() => {
         const isAuthenticated = Auth.loggedIn();
         setLoggedIn(isAuthenticated);
-
         rain();
 
         return () => {
             removeRain(); //calls remove function
+            stop(); //stops sound effect
         };
     }, []);
 
