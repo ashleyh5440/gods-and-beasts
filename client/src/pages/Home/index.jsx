@@ -65,10 +65,12 @@ function Home() {
         <section className="home-page">
             <div className="home-page-container">
                 <h1>Gods and Beasts</h1>
+                <p>Mythology card game</p>
                 <div className="logo-container animate__animated animate__fadeIn animate__delay-2s animate__slower">
                     <img id="logo" src={logo} alt="Logo" />
                     <div className="home-button-container">
-                    <Button variant="primary" onClick={handleGameClick}>Start</Button>
+                    {/* <Button variant="primary" onClick={handleGameClick}>Start</Button> */}
+                    <Button variant="primary" className="button"><NavLink to="/createdeck">Start</NavLink></Button>
                 </div>
                 </div>
             </div>

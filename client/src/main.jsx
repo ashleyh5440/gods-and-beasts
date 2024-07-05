@@ -12,6 +12,7 @@ import CreateDeck from './pages/CreateDeck';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Options from './pages/Options';
+import Scores from './pages/Scores';
 import CardDeck from './components/CardDeck';
 
 const router = createBrowserRouter([
@@ -36,13 +37,13 @@ const router = createBrowserRouter([
         element: <Options />,
       },
       {
+        path: '/scores',
+        element: <Scores />,
+      },
+      {
         path: '/carddeck',
         element: <CardDeck />,
       },
-      // {
-      //   path: '/store',
-      //   element: <Store />,
-      // },
       {
         path: '/lore',
         element: <Lore />,

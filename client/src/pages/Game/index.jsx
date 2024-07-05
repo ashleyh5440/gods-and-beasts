@@ -3,6 +3,7 @@ import { useLocation,  } from "react-router-dom";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
+import Auth from '../../utils/auth';
 
 import CardDeck from '../../components/CardDeck';
 
@@ -27,6 +28,11 @@ import '../Game/styles.css';
 
 
 function Game() {
+
+    //checks if user is logged in
+    const isLoggedIn = () => {
+        return Auth.loggedIn();
+    }
 
     //getting cards from CreateDeck
     const location = useLocation();
@@ -420,6 +426,7 @@ function Game() {
                                     <div className="end-buttons">
                                         <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
                                         <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                        {/* {isLoggedIn() && <Button>Save Score</Button>} */}
                                     </div>
                                 </div>
                             }
@@ -429,6 +436,7 @@ function Game() {
                                     <div className="end-buttons">
                                         <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
                                         <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                        {/* {isLoggedIn() && <Button>Save Score</Button>} */}
                                     </div>
                                 </div>
                             }
@@ -438,6 +446,7 @@ function Game() {
                                     <div className="end-buttons">
                                         <Button><NavLink to={{ pathname: "/createdeck" }}>Play Again</NavLink></Button>
                                         <Button><NavLink to={{ pathname: "/" }}>Home</NavLink></Button>
+                                        {/* {isLoggedIn() && <Button>Save Score</Button>} */}
                                     </div>
                                 </div>
                             }
