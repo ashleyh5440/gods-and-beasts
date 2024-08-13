@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Footer from './components/Footer';
 import './App.css'
 import {setContext} from '@apollo/client/link/context';
 
@@ -34,6 +35,7 @@ function App() {
     <ApolloProvider client = {client}>
       <main>
         <Outlet />
+        <Footer />
       </main>
     </ApolloProvider>
   )

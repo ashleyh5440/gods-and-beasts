@@ -254,7 +254,7 @@ function CreateDeck() {
                                 <Button variant="primary" onClick={handleGodsNextClick}>&#10095;</Button>
                             </div>
                         </div>
-                        <div className="beasts-container">
+                        <div className="beasts-container" style={{marginBottom: "40px"}}>
                             <h3>Beasts</h3>
                             <div className="carousel-container">
                                 <Carousel ref={beastsCarouselRef}>

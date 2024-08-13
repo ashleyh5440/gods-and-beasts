@@ -1,0 +1,14 @@
+.footer {
+    background-color: rgb(198, 152, 36);
+    padding: 2px 0px;
+}
+
+.footer p, .footer a {
+    font-size: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.footer img {
+    width: 40px;
+}
