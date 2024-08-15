@@ -42,6 +42,10 @@ i:nth-child(3n + 3) {
 .home-page {
     margin: 0%;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
 .home-page-container {

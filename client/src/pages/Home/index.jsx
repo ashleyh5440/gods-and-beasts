@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/Button';
 import logo from '../../assets/logo.gif';
+import Footer from '../../components/Footer'
 import 'animate.css';
 import { NavLink } from 'react-router-dom';
 import Auth from '../../utils/auth';
@@ -74,6 +75,7 @@ function Home() {
                 </div>
                 </div>
             </div>
+            <Footer />
         </section>
     );
 }

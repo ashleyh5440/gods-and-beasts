@@ -215,6 +215,12 @@ a {
     .col-md-6 {
         margin: 0% 3%;
     }
+
+    #user-deck {
+        order: 1;
+        position: relative;
+        margin-bottom: 20px;
+    }
 }
 
 @media screen and (max-width: 500px) {
