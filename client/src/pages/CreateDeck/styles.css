@@ -65,7 +65,6 @@ a {
     font-size: 13px;
     color: white;
     margin: 0%;
-    /* margin: 0% 3%; */
 }
 
 #user-deck .react-card-flip {
@@ -86,17 +85,15 @@ a {
 }
 
 .buttons-container button {
-    background-color: rgb(49, 6, 49);
+    background-color: rgba(49, 6, 49, 0);
     border: none;
     color: white;
+    font-size: 40px;
 }
 
-.buttons-container button:hover {
-    background-color: rgb(57, 2, 57);
-}
-
-.buttons-container button:active {
-    background-color: rgb(57, 2, 57) !important;
+.buttons-container button:hover, .buttons-container button:active {
+    background-color: rgba(57, 2, 57, 0) !important;
+    color: grey;
 }
 
 .card-row {
@@ -188,6 +185,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: radial-gradient(rgb(63, 63, 63) -10%, black 90%);
 }
 
 #user-deck {

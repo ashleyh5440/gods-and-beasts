@@ -5,8 +5,6 @@ import { useQuery } from "@apollo/client";
 import { QUERY_CHARACTERS } from "../../utils/queries";
 import Auth from '../../utils/auth';
 
-import CardDeck from '../../components/CardDeck';
-
 import cardBack from '../../../public/card-back.png';
 import blood from '../../../public/blood.png'
 import Carousel from 'react-bootstrap/Carousel';
@@ -53,6 +51,42 @@ function Game() {
     const [playSplatSound] = useSound(bloodSplatSound);
     const [playWinSound] = useSound(winSound);
     const [playLoseSound] = useSound(loseSound);
+
+    function rain() {
+        let amount = 40;
+        let body = document.querySelector('body');
+        let i = 0;
+        while(i < amount) {
+            let drop = document.createElement('i');
+
+            let size = Math.random() * 5;
+            let posX = Math.floor(Math.random() * window.innerWidth);
+            let delay = Math.random() * -90;
+            let duration = Math.random() * 50;
+
+            drop.style.width = 0.2 + size + 'px';
+            drop.style.top = 0;
+            drop.style.left = posX + 'px';
+            drop.style.animationDelay = delay + 's';
+            drop.style.animationDuration = duration + 's';
+
+            body.appendChild(drop);
+            i++;
+        }
+    }
+
+    function removeRain() { //removes rain animation when leaving the page
+        let body = document.querySelector('body');
+        let drops = body.querySelectorAll('i');
+        drops.forEach(drop => body.removeChild(drop));
+    }
+
+    useEffect(() => {
+        rain();
+        return () => {
+            removeRain(); //calls remove function
+        };
+    }, []);
 
     const gameCardStyle = (category) => {
         return {
@@ -264,7 +298,7 @@ function Game() {
         }, 10000)
     }
 
-                        //game logic
+    //game logic
 
     //end the game
     function endGame() {
@@ -463,7 +497,7 @@ function Game() {
                                         <p>Losses: {userLossess}</p>
                                         <p>Ties: {ties}</p>
                                     </div>
-                                    <Carousel ref={carouselRef} onSelect={carouselIndex} className="user-deck-carousel">
+                                    <Carousel ref={carouselRef} onSelect={carouselIndex} interval={null}className="user-deck-carousel">
                                         {userDeck.map((card, index) => (
                                             <Carousel.Item key={index}>
                                                 <div className={`card ${card.category}`} style={{ backgroundImage: gameCardStyle(card.category).backgroundImage }} ref={selectedCardRef}>
@@ -485,8 +519,8 @@ function Game() {
                                         </div>
                                     <Container className="user-card-info">
                                         <Row>
-                                            <Col><p style={{fontSize: "17px"}}>Attack Points: {selectedAttackPoints} </p></Col>
-                                            <Col><p style={{fontSize: "17px"}}>Defense Points: {selectedDefensePoints}</p> </Col>
+                                            <Col><p style={{fontSize: "17px"}}>Attack Points<br /> {selectedAttackPoints} </p></Col>
+                                            <Col><p style={{fontSize: "17px"}}>Defense Points<br /> {selectedDefensePoints}</p> </Col>
                                         </Row>
                                         <Row className="play-buttons">
                                             <Col><Button variant="primary" onClick={attack}>Attack</Button></Col>

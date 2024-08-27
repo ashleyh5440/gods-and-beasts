@@ -250,8 +250,8 @@ function CreateDeck() {
                                 </Carousel>
                             </div>
                             <div className="buttons-container" id="gods">
-                                <Button variant="primary" onClick={handleGodsPrevClick}>&#10094;</Button>
-                                <Button variant="primary" onClick={handleGodsNextClick}>&#10095;</Button>
+                                <Button variant="primary" onClick={handleGodsPrevClick} style={{transform: "scaleX(-1)"}}>➻</Button>
+                                <Button variant="primary" onClick={handleGodsNextClick}>➻</Button>
                             </div>
                         </div>
                         <div className="beasts-container" style={{marginBottom: "40px"}}>
@@ -286,8 +286,8 @@ function CreateDeck() {
                                 </Carousel>
                             </div>
                             <div className="buttons-container" id="beasts">
-                                <Button variant="primary" onClick={handleBeastsPrevClick}>&#10094;</Button>
-                                <Button variant="primary" onClick={handleBeastsNextClick}>&#10095;</Button>
+                                <Button variant="primary" onClick={handleBeastsPrevClick} style={{transform: "scaleX(-1)"}}>➻</Button>
+                                <Button variant="primary" onClick={handleBeastsNextClick}>➻</Button>
                             </div>
                         </div>
                     </Col>
