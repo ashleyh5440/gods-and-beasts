@@ -58,6 +58,14 @@ class Book extends React.Component {
         // totalPage: this.flipBook.getPageFlip().getPageCount(),
       });
     }
+
+    openBook = () => {
+      if (!this.state.bookOpened) {
+        setTimeout(() => {
+          this.setState({ bookOpened: true});
+        }, 100)
+      }
+    }
   
     onLoad = () => {
       this.setState({

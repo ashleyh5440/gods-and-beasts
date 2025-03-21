@@ -57,23 +57,24 @@ i:nth-child(3n + 3) {
 }
 
 .logo-container {
-    width: 43%;
+    width: 35%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 30px;
 }
 
 .home-button-container {
     width: 60%;
-    margin-top: 2%;
+    margin-top: 35px;
 }
 
 .home-button-container button {
     background-color: rgb(198, 152, 36);
     border: none;
     font-family: 'Italianno', cursive;
-    font-size: 40px;
-    padding: 3% 5%;
+    font-size: 30px;
+    padding: 0px 70px;
 }
 
 .home-button-container button:focus, .home-button-container button:active, .home-button-container button:hover {

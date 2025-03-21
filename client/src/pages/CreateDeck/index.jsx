@@ -123,6 +123,7 @@ function CreateDeck() {
     const [activeIndex, setActiveIndex] = useState(0);
     const godsCarouselRef = useRef(null);
     const beastsCarouselRef = useRef(null);
+    const [count, setCount] = useState(0)
 
       const addToDeck = (card) => {
         if (selectedCards.length < 10) {
@@ -294,6 +295,7 @@ function CreateDeck() {
                     <Col md="auto" style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                         <div id="user-deck">
                             <p>Your deck</p>
+                            {/* card count here */}
                              <CardDeck
                             selectedCards={selectedCards}
                             />
